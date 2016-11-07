@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-
 public abstract class ChoixBouton extends JButton implements ActionListener{
 	
 	private ArrayList<Bouton> boutons;
@@ -12,8 +11,7 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 	public ChoixBouton (String s, ArrayList<Bouton> b) {
 		super(s);
 		boutons = b;
-		for(Bouton a : boutons)
-			a.setEnabled(true);
+		super.setEnabled(false);
 	}
 	
 	public abstract void actionClic(Bouton b);
@@ -21,6 +19,9 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (Bouton b : this.boutons)
+		{
+			b.setEnabled(true);
 			b.setcB(this);
+		}
 	}
 }

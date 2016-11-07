@@ -13,6 +13,14 @@ public class Fenetre extends JFrame
 	private JPanel grille;
 	private JPanel panneau;
 	private JPanel menu;
+	private ChoixBouton bColor;
+	private ChoixBouton bAffComp;
+	private ChoixBouton bExistChem;
+	private ChoixBouton bNbCasesMin;
+	private ChoixBouton bNbEtoiles;
+	private ChoixBouton bScore;
+	private ChoixBouton bReliComp;
+	private BoutonJouer bJouer;
 	
 	public Fenetre(String titre)
 	{		
@@ -35,19 +43,59 @@ public class Fenetre extends JFrame
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(8,0));
 		panneau.add(menu, BorderLayout.EAST);
-		menu.add(new BoutonColorier(boutons));
-		menu.add(new JButton("Afficher la composante"));
-		menu.add(new JButton("Existence chemin"));
-		menu.add(new JButton("Nb cases min sur un chemin"));
-		menu.add(new JButton("Nb étoiles pour composante"));
-		menu.add(new JButton("Scores"));
-		menu.add(new JButton("Relier composantes"));
-		menu.add(new JButton("Jeu 2 humains"));
+		bColor = new BoutonColorier(boutons);
+		menu.add(bColor);
+		bAffComp = new BoutonAffComp(boutons);
+		menu.add(bAffComp);
+		bExistChem = new BoutonExistChem(boutons);
+		menu.add(bExistChem);
+		bNbCasesMin = new BoutonNbCasesMin(boutons);
+		menu.add(bNbCasesMin);
+		bNbEtoiles = new BoutonNbEtoiles(boutons); 
+		menu.add(bNbEtoiles);
+		bScore = new BoutonScore(boutons);
+		menu.add(bScore);
+		bReliComp = new BoutonReliComp(boutons); 
+		menu.add(bReliComp);
+		bJouer = new BoutonJouer("Jeu 2 joueurs", this);
+		menu.add(bJouer);
 
 		this.setTitle(titre);
 		this.setSize(700,600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panneau);
 		this.setVisible(true);
+	}
+
+	public ChoixBouton getbColor() {
+		return bColor;
+	}
+
+	public ChoixBouton getbAffComp() {
+		return bAffComp;
+	}
+
+	public ChoixBouton getbExistChem() {
+		return bExistChem;
+	}
+
+	public ChoixBouton getbNbCasesMin() {
+		return bNbCasesMin;
+	}
+
+	public ChoixBouton getbNbEtoiles() {
+		return bNbEtoiles;
+	}
+
+	public ChoixBouton getbScore() {
+		return bScore;
+	}
+
+	public ChoixBouton getbReliComp() {
+		return bReliComp;
+	}
+
+	public BoutonJouer getbJouer() {
+		return bJouer;
 	}
 }

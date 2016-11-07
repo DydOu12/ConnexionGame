@@ -12,5 +12,4 @@ public class Application {
 		Joueur j1 = new Joueur(Color.BLUE);
 		Joueur j2 = new Joueur(Color.RED);
 	}
-
 }

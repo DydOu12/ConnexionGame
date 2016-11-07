@@ -9,26 +9,15 @@ public class Bouton extends JButton implements ActionListener
 {
 	private int ligne;
 	private int colonne;
-	private String motif;
 	private ChoixBouton cB;
+	private Joueur joueur;
 	
 	public Bouton(int l, int c)
 	{
 		this.ligne = l;
 		this.colonne = c;
 		this.addActionListener(this);
-//		setEnabled(false);
-	}
-	
-	public Bouton(int l, int c, String m, Color f)
-	{
-		this(l,c);
-		this.motif = m;
-		super.setBackground(f);
-	}
-
-	public String getMotif() {
-		return motif;
+		setEnabled(false);
 	}
 
 	public int getLigne() {
@@ -41,6 +30,15 @@ public class Bouton extends JButton implements ActionListener
 	
 	public void setcB(ChoixBouton cB) {
 		this.cB = cB;
+	}
+	
+	public Joueur getJoueur() {
+		return joueur;
+	}
+	
+	public void setJoueur(Joueur joueur) 
+	{
+		this.joueur = joueur;
 	}
 
 	@Override
