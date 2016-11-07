@@ -21,8 +21,14 @@ public class Case
 		return joueur;
 	}
 
-	public void setJoueur(Joueur joueur) {
+	public void setJoueur(Joueur joueur) 
+	{
 		this.joueur = joueur;
+	}
+
+	@Override
+	public String toString() {
+		return "Case [x=" + x + ", y=" + y + ", joueur=" + joueur + "]";
 	}
 
 	public int getX() {
