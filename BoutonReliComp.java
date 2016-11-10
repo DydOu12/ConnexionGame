@@ -7,7 +7,7 @@ public class BoutonReliComp extends ChoixBouton{
 	}
 	
 	@Override
-	public void actionClic(Bouton b) {
+	public void actionClic(Bouton b, Joueur j) {
 
 	}
 }

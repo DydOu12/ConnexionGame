@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class Classe 
@@ -28,5 +29,22 @@ public class Classe
 		this.classeCase = classeCase;
 	}
 	
+	public boolean caseAutour(int x, int y, Joueur j){
+		boolean caseAutour = false;
+		Iterator<Case> it = classeCase.iterator();
+		
+		Case c;
+		while (it.hasNext() && !caseAutour) {
+			c = it.next();
+			if ((	(c.getJoueur().equals(j))       && 
+					(Math.abs(c.getX()-x)<=1) 		|| 
+					(Math.abs(c.getY()-y)<=1))) 
+			{
+				caseAutour = true;
+			}
+		}
+		return caseAutour;
+	}
+
 	
 }

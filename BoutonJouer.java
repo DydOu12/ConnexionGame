@@ -8,7 +8,8 @@ public class BoutonJouer extends JButton implements ActionListener{
 	
 	public BoutonJouer(String s, Fenetre f){
 		super(s);
-		fen = f; 
+		fen = f;
+		addActionListener(this);
 	}
 
 	@Override

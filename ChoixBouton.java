@@ -14,7 +14,7 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 		super.setEnabled(false);
 	}
 	
-	public abstract void actionClic(Bouton b);
+	public abstract void actionClic(Bouton b, Joueur j);
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
