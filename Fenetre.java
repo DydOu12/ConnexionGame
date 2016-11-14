@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -19,41 +20,45 @@ public class Fenetre extends JFrame
 	private ChoixBouton bScore;
 	private ChoixBouton bReliComp;
 	private BoutonJouer bJouer;
+	private Partie partie;
 	
-	public Fenetre(String titre)
+	public Fenetre(String titre, int n)
 	{		
 		panneau = new JPanel();
 		panneau.setLayout(new BorderLayout());
 		
 		grille = new JPanel();
-		grille.setLayout(new GridLayout(10,10));
+		grille.setLayout(new GridLayout(n,n));
 
 		Bouton b;
 		ArrayList<Bouton> boutons = new ArrayList<>();
 		panneau.add(grille, BorderLayout.CENTER);
-		for(int i=0; i<10; ++i)
-			for(int j=0; j<10; ++j){
+		for(int i=0; i<n; ++i){
+			for(int j=0; j<n; ++j){
 				b = new Bouton(i,j);
 				grille.add(b);
 				boutons.add(b);
 			}
+		}
+		
+		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
 		
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(8,0));
 		panneau.add(menu, BorderLayout.EAST);
-		bColor = new BoutonColorier(boutons);
+		bColor = new BoutonColorier(boutons, partie);
 		menu.add(bColor);
-		bAffComp = new BoutonAffComp(boutons);
+		bAffComp = new BoutonAffComp(boutons, partie);
 		menu.add(bAffComp);
-		bExistChem = new BoutonExistChem(boutons);
+		bExistChem = new BoutonExistChem(boutons, partie);
 		menu.add(bExistChem);
-		bNbCasesMin = new BoutonNbCasesMin(boutons);
+		bNbCasesMin = new BoutonNbCasesMin(boutons, partie);
 		menu.add(bNbCasesMin);
-		bNbEtoiles = new BoutonNbEtoiles(boutons); 
+		bNbEtoiles = new BoutonNbEtoiles(boutons, partie); 
 		menu.add(bNbEtoiles);
-		bScore = new BoutonScore(boutons);
+		bScore = new BoutonScore(boutons, partie);
 		menu.add(bScore);
-		bReliComp = new BoutonReliComp(boutons); 
+		bReliComp = new BoutonReliComp(boutons, partie); 
 		menu.add(bReliComp);
 		bJouer = new BoutonJouer("Jeu 2 joueurs", this);
 		menu.add(bJouer);

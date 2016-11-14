@@ -43,8 +43,9 @@ public class Bouton extends JButton implements ActionListener
 //		this.joueur = joueur;
 //	}
 	
-	public void colorer(/*Joueur j*/){	
-		//this.setBackground(j retourné du controleur);
+	public void colorer(Joueur j){	
+		this.setBackground(j.getCouleur());
+		this.setEnabled(false);
 	}
 
 	@Override
@@ -54,6 +55,6 @@ public class Bouton extends JButton implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.cB.actionClic(this,new Joueur(Color.BLUE));
+		this.cB.actionClic(this);
 	}
 }

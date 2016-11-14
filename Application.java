@@ -8,8 +8,6 @@ public class Application {
 	 */
 	public static void main(String[] args) 
 	{
-		Fenetre f = new Fenetre("Best Game Ever");
-		Joueur j1 = new Joueur(Color.BLUE);
-		Joueur j2 = new Joueur(Color.RED);
+		Fenetre f = new Fenetre("Best Game Ever", 8);
 	}
 }

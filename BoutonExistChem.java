@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class BoutonExistChem extends ChoixBouton{
-	public BoutonExistChem(ArrayList<Bouton> b){
-		super("Existence chemin", b);
+	public BoutonExistChem(ArrayList<Bouton> b, Partie p){
+		super("Existence chemin", b, p);
 		this.addActionListener(this);
 	}
 	
 	@Override
-	public void actionClic(Bouton b, Joueur j) {
+	public void actionClic(Bouton b) {
 
 	}
 }

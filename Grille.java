@@ -8,6 +8,7 @@ public class Grille
 	public Grille(int n)
 	{
 		this.grille = new Case[n][n];
+		classes = new ArrayList<>();
 		
 		Case c;
 		for(int i=0; i<n; ++i)
@@ -23,13 +24,13 @@ public class Grille
 	{
 		this.getCase(x,y).setJoueur(j);
 		
-		for(Classe classe : classes)
-		{
-			if(classe.caseAutour(x, y, j))
-			{
-				
-			}
-		}
+//		for(Classe classe : classes)
+//		{
+//			if(classe.caseAutour(x, y, j))
+//			{
+//				
+//			}
+//		}
 	}
 	
 	public Case getCase(int x, int y)
