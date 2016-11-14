@@ -23,14 +23,15 @@ public class Grille
 	public void colorerCase(int x, int y, Joueur j)
 	{
 		this.getCase(x,y).setJoueur(j);
-		
-//		for(Classe classe : classes)
-//		{
-//			if(classe.caseAutour(x, y, j))
-//			{
-//				
-//			}
-//		}
+		Classe newClasse = new Classe();
+		for(int i = 0; i<classes.size(); ++i)
+		{
+			if(classes.get(i).caseAutour(x, y, j))
+			{
+				newClasse.union(classes.remove(i));
+			}
+		}
+		classes.add(newClasse);
 	}
 	
 	public Case getCase(int x, int y)

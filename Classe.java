@@ -12,13 +12,18 @@ public class Classe
 		classeCase.add(c);
 	}
 	
+	public Classe()
+	{
+		classeCase = new HashSet<>();
+	}
+	
 	public void union (Classe c) {
 		classeCase.addAll(c.getClasseCase());
 	}
 
 	@Override
 	public String toString() {
-		return "Classe [classeCase=" + classeCase + "]";
+		return "Classe [classeCase=" + classeCase + "]\n";
 	}
 
 	public HashSet<Case> getClasseCase() {
@@ -29,6 +34,8 @@ public class Classe
 		this.classeCase = classeCase;
 	}
 	
+	
+	// si la classe possède au moins une case(x,y) autour d'elle
 	public boolean caseAutour(int x, int y, Joueur j){
 		boolean caseAutour = false;
 		Iterator<Case> it = classeCase.iterator();
@@ -36,8 +43,8 @@ public class Classe
 		Case c;
 		while (it.hasNext() && !caseAutour) {
 			c = it.next();
-			if ((	(c.getJoueur().equals(j))       && 
-					(Math.abs(c.getX()-x)<=1) 		|| 
+			if ((	(j.equals(c.getJoueur()))       && 
+					(Math.abs(c.getX()-x)<=1) 		&& 
 					(Math.abs(c.getY()-y)<=1))) 
 			{
 				caseAutour = true;

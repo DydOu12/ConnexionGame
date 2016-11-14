@@ -40,6 +40,8 @@ public class Fenetre extends JFrame
 				boutons.add(b);
 			}
 		}
+		//random i et ramdom j --> fait dans grille
+		// setText sur case(i,j) = * avec la couleur associée
 		
 		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
 		

@@ -3,18 +3,21 @@ public class Case
 	private int x;
 	private int y;
 	private Joueur joueur;
+	private boolean aEtoile;
 	
-	public Case(int x, int y, Joueur j)
-	{
-		this(x,y);
-		this.joueur = j;
-	}
+//	public Case(int x, int y, Joueur j)
+//	{
+//		this(x,y);
+//		this.joueur = j;
+//		this.aEtoile = true;
+//	}
 	
 	public Case(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
 		this.joueur = null;
+		aEtoile = false;
 	}
 
 	public Joueur getJoueur() {
@@ -38,4 +41,14 @@ public class Case
 	public int getY() {
 		return y;
 	}
+
+	public boolean isaEtoile() {
+		return aEtoile;
+	}
+
+	public void setaEtoile(boolean aEtoile) {
+		this.aEtoile = aEtoile;
+	}
+	
+	
 }

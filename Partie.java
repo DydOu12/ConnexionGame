@@ -31,5 +31,11 @@ public class Partie {
 		echangerJoueur();
 	}
 	
+	public void placerEtoilesAleatoirement(){
+		for (int i=0; i<2; i++) {
+			
+		}
+	}
+	
 	
 }

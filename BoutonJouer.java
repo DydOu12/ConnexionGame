@@ -21,6 +21,5 @@ public class BoutonJouer extends JButton implements ActionListener{
 		fen.getbNbEtoiles().setEnabled(true);
 		fen.getbReliComp().setEnabled(true);
 		fen.getbScore().setEnabled(true);
-		System.out.println("test");
 	}
 }
