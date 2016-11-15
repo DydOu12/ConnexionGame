@@ -10,16 +10,25 @@ public class Bouton extends JButton implements ActionListener
 	private int ligne;
 	private int colonne;
 	private ChoixBouton cB;
-	//private Joueur joueur;
+	private Color coulBouton_;
+	private Case case_;
 	
-	public Bouton(int l, int c /*ControleurBouton ctrlB*/)
+	public Bouton(int l, int c, Case ca)
 	{
 		this.ligne = l;
 		this.colonne = c;
+		case_ = ca;
 		this.addActionListener(this);
-		//joueur = null;
-		/*init controleur*/
 		setEnabled(false);
+		coulBouton_ = null;
+	}
+
+	public Color getCoulBouton() {
+		return coulBouton_;
+	}
+
+	public void setCoulBouton(Color coulBouton) {
+		this.coulBouton_ = coulBouton;
 	}
 
 	public int getLigne() {
@@ -30,22 +39,18 @@ public class Bouton extends JButton implements ActionListener
 		return colonne;
 	}
 	
+	public Case getCase() {
+		return case_;
+	}
+
 	public void setcB(ChoixBouton cB) {
 		this.cB = cB;
+		this.setBackground(coulBouton_);
 	}
-	
-//	public Joueur getJoueur() {
-//		return joueur;
-//	}
-//	
-//	public void setJoueur(Joueur joueur) 
-//	{
-//		this.joueur = joueur;
-//	}
 	
 	public void colorer(Joueur j){	
 		this.setBackground(j.getCouleur());
-		this.setEnabled(false);
+		coulBouton_ = j.getCouleur();
 	}
 
 	@Override

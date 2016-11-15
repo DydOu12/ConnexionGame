@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,5 +26,6 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 			b.setEnabled(true);
 			b.setcB(this);
 		}
+		//this.setBackground(Color.DARK_GRAY);
 	}
 }

@@ -9,10 +9,11 @@ public class BoutonColorier extends ChoixBouton {
 	
 	@Override
 	public void actionClic(Bouton b) {
-		System.out.println(b.getLigne() + " " + b.getColonne());
-		// on colorie la vue
-		b.colorer(partie.getJoueurCour());
-		// on colorie le modèle
-		partie.colorerCase(b.getLigne(), b.getColonne());
+		if(b.getCoulBouton() == null){
+			// on colorie la vue
+			b.colorer(partie.getJoueurCour());
+			// on colorie le modèle
+			partie.colorerCase(b.getCase());
+		}
 	}
 }

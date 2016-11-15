@@ -20,22 +20,48 @@ public class Grille
 			}		
 	}
 	
-	public void colorerCase(int x, int y, Joueur j)
+	public void colorerCase(Case c, Joueur j)
 	{
-		this.getCase(x,y).setJoueur(j);
+		c.setJoueur(j);
 		Classe newClasse = new Classe();
-		for(int i = 0; i<classes.size(); ++i)
+		int i = 0;
+		while(i<classes.size())
 		{
-			if(classes.get(i).caseAutour(x, y, j))
+			if(classes.get(i).caseAutour(c, j))
 			{
 				newClasse.union(classes.remove(i));
+			} else {
+				++i;
 			}
 		}
 		classes.add(newClasse);
+		//System.out.println(classes);
+	}
+	
+	public int getTailleGrille(){
+		return grille.length;
 	}
 	
 	public Case getCase(int x, int y)
 	{
 		return this.grille[x][y];
+	}
+	
+	public Classe afficherComposante(Case ca) {
+
+		for (Classe c : classes) {
+			if(c.possede(ca)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public boolean existeChemin(Case c1, Case c2){
+		for(Classe c : classes)
+			if(c.possede(c1))
+				return c.possede(c2);
+		
+		return false;
 	}
 }

@@ -36,9 +36,11 @@ public class Classe
 	
 	
 	// si la classe possède au moins une case(x,y) autour d'elle
-	public boolean caseAutour(int x, int y, Joueur j){
+	public boolean caseAutour(Case ca, Joueur j){
 		boolean caseAutour = false;
 		Iterator<Case> it = classeCase.iterator();
+		int x = ca.getX();
+		int y = ca.getY();
 		
 		Case c;
 		while (it.hasNext() && !caseAutour) {
@@ -49,8 +51,13 @@ public class Classe
 			{
 				caseAutour = true;
 			}
+			
 		}
 		return caseAutour;
+	}
+
+	public boolean possede(Case c) {
+		return classeCase.contains(c);
 	}
 
 	

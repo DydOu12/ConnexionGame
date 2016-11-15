@@ -30,20 +30,27 @@ public class Fenetre extends JFrame
 		grille = new JPanel();
 		grille.setLayout(new GridLayout(n,n));
 
+		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
+
 		Bouton b;
 		ArrayList<Bouton> boutons = new ArrayList<>();
 		panneau.add(grille, BorderLayout.CENTER);
 		for(int i=0; i<n; ++i){
 			for(int j=0; j<n; ++j){
-				b = new Bouton(i,j);
+				b = new Bouton(i,j,partie.getGrille().getCase(i, j));
+				b.setText(i+","+j);
 				grille.add(b);
 				boutons.add(b);
+				if(partie.getGrille().getCase(i, j).isaEtoile()) {
+					b.setText("*");
+					b.colorer(partie.getGrille().getCase(i, j).getJoueur());
+				}
+
 			}
 		}
 		//random i et ramdom j --> fait dans grille
 		// setText sur case(i,j) = * avec la couleur associée
 		
-		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
 		
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(8,0));
