@@ -22,10 +22,6 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		for (Bouton b : this.boutons)
-		{
-			b.setEnabled(true);
 			b.setcB(this);
-		}
-		//this.setBackground(Color.DARK_GRAY);
 	}
 }

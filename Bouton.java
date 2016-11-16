@@ -7,16 +7,12 @@ import javax.swing.JButton;
 
 public class Bouton extends JButton implements ActionListener
 {
-	private int ligne;
-	private int colonne;
 	private ChoixBouton cB;
 	private Color coulBouton_;
 	private Case case_;
 	
-	public Bouton(int l, int c, Case ca)
+	public Bouton(Case ca)
 	{
-		this.ligne = l;
-		this.colonne = c;
 		case_ = ca;
 		this.addActionListener(this);
 		setEnabled(false);
@@ -29,14 +25,6 @@ public class Bouton extends JButton implements ActionListener
 
 	public void setCoulBouton(Color coulBouton) {
 		this.coulBouton_ = coulBouton;
-	}
-
-	public int getLigne() {
-		return ligne;
-	}
-
-	public int getColonne() {
-		return colonne;
 	}
 	
 	public Case getCase() {
@@ -55,7 +43,7 @@ public class Bouton extends JButton implements ActionListener
 
 	@Override
 	public String toString() {
-		return "Case [ligne=" + ligne + ", colonne=" + colonne + "]";
+		return "Case [ligne=" + case_.getX() + ", colonne=" + case_.getY() + "]";
 	}
 
 	@Override

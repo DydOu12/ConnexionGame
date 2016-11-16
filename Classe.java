@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -5,16 +6,31 @@ import java.util.Iterator;
 public class Classe 
 {
 	private HashSet<Case> classeCase;
+	private ArrayList<Case> tabParent;
 	
 	public Classe(Case c)
 	{
 		classeCase = new HashSet<>();
 		classeCase.add(c);
+		tabParent = new ArrayList<>();
 	}
 	
 	public Classe()
 	{
 		classeCase = new HashSet<>();
+	}
+	
+	public int classe(int numCase, int[] tabInter, int[] tabP){
+		if(tabInter[numCase] != 0){
+			for(int j=0; j<tabP.length-1; ++j){
+				tabInter[tabP[j]] = numCase;
+			}
+			return numCase;
+		}
+		else{
+			tabP[tabP.length] = numCase;
+			return classe(tabInter[numCase], tabInter, tabP);
+		}
 	}
 	
 	public void union (Classe c) {
@@ -33,7 +49,6 @@ public class Classe
 	public void setClasseCase(HashSet<Case> classeCase) {
 		this.classeCase = classeCase;
 	}
-	
 	
 	// si la classe possède au moins une case(x,y) autour d'elle
 	public boolean caseAutour(Case ca, Joueur j){

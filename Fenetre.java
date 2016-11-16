@@ -21,6 +21,7 @@ public class Fenetre extends JFrame
 	private ChoixBouton bReliComp;
 	private BoutonJouer bJouer;
 	private Partie partie;
+	private ArrayList<Bouton> boutons;
 	
 	public Fenetre(String titre, int n)
 	{		
@@ -33,11 +34,11 @@ public class Fenetre extends JFrame
 		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
 
 		Bouton b;
-		ArrayList<Bouton> boutons = new ArrayList<>();
+		boutons = new ArrayList<>();
 		panneau.add(grille, BorderLayout.CENTER);
 		for(int i=0; i<n; ++i){
 			for(int j=0; j<n; ++j){
-				b = new Bouton(i,j,partie.getGrille().getCase(i, j));
+				b = new Bouton(partie.getGrille().getCase(i, j));
 				b.setText(i+","+j);
 				grille.add(b);
 				boutons.add(b);
@@ -45,12 +46,8 @@ public class Fenetre extends JFrame
 					b.setText("*");
 					b.colorer(partie.getGrille().getCase(i, j).getJoueur());
 				}
-
 			}
-		}
-		//random i et ramdom j --> fait dans grille
-		// setText sur case(i,j) = * avec la couleur associée
-		
+		}		
 		
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(8,0));
@@ -77,6 +74,14 @@ public class Fenetre extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panneau);
 		this.setVisible(true);
+	}
+
+	public ArrayList<Bouton> getBoutons() {
+		return boutons;
+	}
+
+	public Partie getPartie() {
+		return partie;
 	}
 
 	public ChoixBouton getbColor() {
