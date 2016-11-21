@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class Partie {
 	private Joueur j1_;
@@ -58,7 +60,7 @@ public class Partie {
 		}
 	}
 
-	public Classe afficherComposante(Case ca) {
+	public ArrayList<Case> afficherComposante(Case ca) {
 		return grille.afficherComposante(ca);
 	}
 	

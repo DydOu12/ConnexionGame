@@ -1,5 +1,3 @@
-import java.awt.Color;
-
 
 public class Application {
 
@@ -8,6 +6,6 @@ public class Application {
 	 */
 	public static void main(String[] args) 
 	{
-		Fenetre f = new Fenetre("Best Game Ever", 8);
+		new Fenetre("Best Game Ever", 8);
 	}
 }
