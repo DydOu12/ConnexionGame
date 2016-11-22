@@ -6,7 +6,7 @@ public class Case
 	private int y;
 	private Joueur joueur;
 	private boolean aEtoile;
-	private Case parent;
+	private Case parent_;
 	private ArrayList<Case> fils;
 
 	public Case(int x, int y)
@@ -15,20 +15,28 @@ public class Case
 		this.y = y;
 		this.joueur = null;
 		aEtoile = false;
-		parent = null;
+		parent_ = null;
 		fils = new ArrayList<>();
 	}
 
 	public Case getParent() {
-		return parent;
+		return parent_;
 	}
 
 	public void setParent(Case parent) {
-		this.parent = parent;
+		if(parent_ != null) {
+			parent_.supprimerFils(this);
+		}
+		parent_ = parent;
+		parent_.ajouterFils(this);
 	}
 	
 	public void ajouterFils(Case c){
 		fils.add(c);
+	}
+	
+	public void supprimerFils(Case c){
+		fils.remove(c);
 	}
 	
 	public ArrayList<Case> getfils() {
@@ -44,9 +52,10 @@ public class Case
 		this.joueur = joueur;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Case [x=" + x + ", y=" + y + ", joueur=" + joueur + "]";
+		return "Case [x=" + x + ", y=" + y +"]\n";
 	}
 
 	public int getX() {
@@ -66,10 +75,10 @@ public class Case
 	}
 	
 	public Case getClasse() {
-		if (parent == null)
+		if (parent_ == null){
 			return this;
-		else
-			return parent.getClasse();
+		}else
+			return parent_.getClasse();
 	}
 	
 	public int cardinaliteCase(){
@@ -82,7 +91,7 @@ public class Case
 			for(Case c : fils){
 				i += c.cardinaliteCase();
 			}
-			return i;
+			return i+1;
 		}
 	}
 }

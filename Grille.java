@@ -69,49 +69,47 @@ public class Grille
 		} else {
 			yMin = c.getY()-1;
 			yMax = c.getY()+1;
-		}
+		} 
 		
 		Case caseActuelle;
+		Case classeCaseActuelle;
 		
-//		ArrayList<Case> classes = new ArrayList<>();
-		Set<Case> classes = new HashSet<>();
 		Case nouvelleClasse = c;
+		
+		Set<Case> classes = new HashSet<>();
 		for (int x = xMin; x <= xMax; ++x){
 			for (int y = yMin; y <= yMax; ++y){
 				caseActuelle = grille[x][y];
 				// si x et y sont differents et le joueur est identique
 				if(!(x == c.getX() && y == c.getY()) && j.equals(caseActuelle.getJoueur())){
-
 //					if(!c.equals(caseActuelle.getClasse())){
 //						caseActuelle.getClasse().setParent(c);
 //					}
 //					c.ajouterFils(caseActuelle);
 
+					classeCaseActuelle = caseActuelle.getClasse();
 					
-					if (nouvelleClasse == null) {
-						nouvelleClasse = caseActuelle.getClasse();
-					} else {
-						if (nouvelleClasse.cardinaliteCase() > caseActuelle.getClasse().cardinaliteCase()) {
-							classes.add(caseActuelle.getClasse());
-						} else {
+					// Si la classe que l'on possède déjà est différente à celle que l'on va comparer
+					if (!classeCaseActuelle.equals(nouvelleClasse)) {
+						// Si la cardinalite de la classe de la case que l'on observe est superieure à nouvelleClasse 
+						if (classeCaseActuelle.cardinaliteCase() > nouvelleClasse.cardinaliteCase()) {
 							classes.add(nouvelleClasse);
-							nouvelleClasse = caseActuelle.getClasse();
+							nouvelleClasse = classeCaseActuelle;
+						} else {
+							classes.add(classeCaseActuelle);
+
 						}
 					}
-					System.out.println(caseActuelle);
-					System.out.println(caseActuelle.getClasse().cardinaliteCase());
 					
 				}
 			}
 		}
-		System.out.println(nouvelleClasse);
+		
 		for(Case ca : classes) {
-			nouvelleClasse.ajouterFils(ca);
 			ca.setParent(nouvelleClasse);
 		}
 		
 		if (!c.equals(nouvelleClasse)) {
-			nouvelleClasse.ajouterFils(c);
 			c.setParent(nouvelleClasse);
 		}
 	}
