@@ -61,7 +61,7 @@ public class Partie {
 	}
 
 	public ArrayList<Case> afficherComposante(Case ca) {
-		return grille.afficherComposante(ca);
+		return grille.afficherComposante(ca.getClasse());
 	}
 	
 	public boolean existeChemin(Case c1, Case c2){

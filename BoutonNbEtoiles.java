@@ -1,10 +1,8 @@
-import java.awt.Color;
 import java.util.ArrayList;
 
 public class BoutonNbEtoiles extends ChoixBouton{
-	public BoutonNbEtoiles(ArrayList<Bouton> b, Partie p){
-		super("Nb étoiles pour composante", b, p);
-		this.addActionListener(this);
+	public BoutonNbEtoiles(ArrayList<Bouton> boutons, Partie partie){
+		super("Nb Ã©toiles pour composante", boutons, partie);
 	}
 	
 	@Override

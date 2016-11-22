@@ -124,12 +124,10 @@ public class Grille
 	}
 	
 	public ArrayList<Case> afficherComposante(Case ca) {
-		Case classe = ca.getClasse();
 		ArrayList<Case> composante = new ArrayList<>();
-		for (Case [] ligne : grille )
-			for (Case c : ligne)
-				if (c.getClasse().equals(classe))
-					composante.add(c);
+		composante.add(ca);
+		for (Case fils : ca.getFils())
+				composante.addAll(afficherComposante(fils));
 		return composante;
 	}
 	

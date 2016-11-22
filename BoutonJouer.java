@@ -22,9 +22,9 @@ public class BoutonJouer extends JButton implements ActionListener{
 		fen.getbReliComp().setEnabled(true);
 		fen.getbScore().setEnabled(true);
 		this.setEnabled(false);
-		for(Bouton b : fen.getBoutons()){
-			b.setEnabled(true);
-			b.setcB(new BoutonColorier(fen.getBoutons(), fen.getPartie()));
+		for(Bouton bouton : fen.getBoutons()){
+			bouton.setEnabled(true);
+			bouton.setChoixBouton(new BoutonColorier(fen.getBoutons(), fen.getPartie()));
 		}
 	}
 }

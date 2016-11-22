@@ -7,38 +7,38 @@ import javax.swing.JButton;
 
 public class Bouton extends JButton implements ActionListener
 {
-	private ChoixBouton cB;
-	private Color coulBouton_;
+	private ChoixBouton choixBouton_;
+	private Color couleurBouton_;
 	private Case case_;
 	
 	public Bouton(Case ca)
 	{
 		case_ = ca;
-		this.addActionListener(this);
+		addActionListener(this);
 		setEnabled(false);
-		coulBouton_ = null;
+		couleurBouton_ = null;
 	}
 
-	public Color getCoulBouton() {
-		return coulBouton_;
+	public Color getCouleurBouton() {
+		return couleurBouton_;
 	}
 
-	public void setCoulBouton(Color coulBouton) {
-		this.coulBouton_ = coulBouton;
+	public void setCouleurBouton(Color couleurBouton) {
+		couleurBouton_ = couleurBouton;
 	}
 	
 	public Case getCase() {
 		return case_;
 	}
 
-	public void setcB(ChoixBouton cB) {
-		this.cB = cB;
-		this.setBackground(coulBouton_);
+	public void setChoixBouton(ChoixBouton choixBouton) {
+		choixBouton_ = choixBouton;
+		setBackground(couleurBouton_);
 	}
 	
-	public void colorer(Joueur j){	
-		this.setBackground(j.getCouleur());
-		coulBouton_ = j.getCouleur();
+	public void colorer(Joueur joueur){	
+		setBackground(joueur.getCouleur());
+		couleurBouton_ = joueur.getCouleur();
 	}
 
 	@Override
@@ -48,6 +48,6 @@ public class Bouton extends JButton implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.cB.actionClic(this);
+		choixBouton_.actionClic(this);
 	}
 }

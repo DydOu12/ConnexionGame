@@ -2,21 +2,21 @@ import java.util.ArrayList;
 
 public class Case
 {
-	private int x;
-	private int y;
-	private Joueur joueur;
-	private boolean aEtoile;
+	private int x_;
+	private int y_;
+	private Joueur joueur_;
+	private boolean aEtoile_;
 	private Case parent_;
-	private ArrayList<Case> fils;
+	private ArrayList<Case> fils_;
 
 	public Case(int x, int y)
 	{
-		this.x = x;
-		this.y = y;
-		this.joueur = null;
-		aEtoile = false;
+		x_ = x;
+		y_ = y;
+		joueur_ = null;
+		aEtoile_ = false;
 		parent_ = null;
-		fils = new ArrayList<>();
+		fils_ = new ArrayList<>();
 	}
 
 	public Case getParent() {
@@ -31,67 +31,69 @@ public class Case
 		parent_.ajouterFils(this);
 	}
 	
-	public void ajouterFils(Case c){
-		fils.add(c);
+	public void ajouterFils(Case fils){
+		fils_.add(fils);
 	}
 	
-	public void supprimerFils(Case c){
-		fils.remove(c);
+	public void supprimerFils(Case fils){
+		fils_.remove(fils);
 	}
 	
-	public ArrayList<Case> getfils() {
-		return fils;
+	public ArrayList<Case> getFils() {
+		return fils_;
 	}
 
 	public Joueur getJoueur() {
-		return joueur;
+		return joueur_;
 	}
 
 	public void setJoueur(Joueur joueur) 
 	{
-		this.joueur = joueur;
+		joueur_ = joueur;
 	}
 
 	
 	@Override
 	public String toString() {
-		return "Case [x=" + x + ", y=" + y +"]\n";
+		return "Case [x=" + x_ + ", y=" + y_ +"]\n";
 	}
 
 	public int getX() {
-		return x;
+		return x_;
 	}
 
 	public int getY() {
-		return y;
+		return y_;
 	}
 
 	public boolean isaEtoile() {
-		return aEtoile;
+		return aEtoile_;
 	}
 
 	public void setaEtoile(boolean aEtoile) {
-		this.aEtoile = aEtoile;
+		aEtoile_ = aEtoile;
 	}
 	
 	public Case getClasse() {
 		if (parent_ == null){
 			return this;
-		}else
-			return parent_.getClasse();
+		}else {
+			Case classe = parent_.getClasse();
+			// Remonte le noeud à la racine
+			setParent(classe);
+			return classe;
+		}
 	}
 	
 	public int cardinaliteCase(){
-		if(fils.size() == 0){
+		if(fils_.size() == 0)
 			return 1;
-		}
-		else
-		{
+		else {
 			int i = 0;
-			for(Case c : fils){
+			for(Case c : fils_)
 				i += c.cardinaliteCase();
-			}
 			return i+1;
 		}
 	}
+	
 }

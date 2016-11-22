@@ -5,9 +5,8 @@ import javax.swing.JOptionPane;
 public class BoutonExistChem extends ChoixBouton{
 	private Case case_;
 	
-	public BoutonExistChem(ArrayList<Bouton> b, Partie p){
-		super("Existence chemin", b, p);
-		this.addActionListener(this);
+	public BoutonExistChem(ArrayList<Bouton> boutons, Partie partie){
+		super("Existence chemin", boutons, partie);
 	}
 	
 	@Override
@@ -21,7 +20,7 @@ public class BoutonExistChem extends ChoixBouton{
 			int x2 = case_.getX();
 			int y2 = case_.getY();
 			
-			boolean existe = partie.existeChemin(case_, b.getCase());
+			boolean existe = partie_.existeChemin(case_, b.getCase());
 			JOptionPane jop = new JOptionPane();
 			if(existe)
 				jop.showMessageDialog(null, "Il existe un chemin entre la Case("+x1+","+y1+") et la Case("+x2+","+y2+")", "Existe chemin ?", JOptionPane.INFORMATION_MESSAGE);

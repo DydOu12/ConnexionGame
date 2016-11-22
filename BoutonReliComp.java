@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
 public class BoutonReliComp extends ChoixBouton{
-	public BoutonReliComp(ArrayList<Bouton> b, Partie p){
-		super("Relier composantes", b, p);
-		this.addActionListener(this);
+	public BoutonReliComp(ArrayList<Bouton> boutons, Partie partie){
+		super("Relier composantes", boutons, partie);
 	}
 	
 	@Override

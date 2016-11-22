@@ -2,18 +2,17 @@ import java.util.ArrayList;
 
 public class BoutonColorier extends ChoixBouton {
 
-	public BoutonColorier(ArrayList<Bouton> b, Partie p){
-		super("Colorer une case", b, p);
-		this.addActionListener(this);
+	public BoutonColorier(ArrayList<Bouton> boutons, Partie partie){
+		super("Colorer une case", boutons, partie);
 	}
 	
 	@Override
-	public void actionClic(Bouton b) {
-		if(b.getCoulBouton() == null){
+	public void actionClic(Bouton bouton) {
+		if(bouton.getCouleurBouton() == null){
 			// on colorie la vue
-			b.colorer(partie.getJoueurCour());
+			bouton.colorer(partie_.getJoueurCour());
 			// on colorie le modèle
-			partie.colorerCase(b.getCase());
+			partie_.colorerCase(bouton.getCase());
 		}
 	}
 }
