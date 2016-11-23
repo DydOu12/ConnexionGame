@@ -140,6 +140,7 @@ public class Grille
 			
 			Case c = grille_[x][y];
 			
+			// s'il n'y a pas de case de la même couleur autour de la case random
 			if(caseRienAutour(c)){
 				if(c.getJoueur() == null && i%2 == 0){
 					c.setaEtoile(true);
@@ -169,8 +170,12 @@ public class Grille
 			for (int y = yMin; y <= yMax; ++y){
 				/* si la case observée a un déjà un joueur et
 				 *                     qu'elle n'est pas égal à la case en paramètre */
-				if(grille_[x][y].getJoueur() != null && !grille_[x][y].equals(c))
-					return false;
+				if(grille_[x][y].getJoueur() != null  && !grille_[x][y].equals(c))
+					/* si la case observée est de la même couleur que la case en paramètre
+					 * on retourne false
+					 * */
+					if(grille_[x][y].getJoueur().equals(c.getJoueur()))
+						return false;
 			}
 		}
 		
