@@ -172,14 +172,13 @@ public class Grille
 		for (int x = xMin; x <= xMax; ++x){
 			for (int y = yMin; y <= yMax; ++y){
 				/* 
-				 * si la case observée a joueur différent du joueur qui doit obtenir la nouvelle case et
+				 * si la case observée a un joueur égal au joueur qui doit obtenir la nouvelle case et
 				 * qu'elle n'est pas égale à la case en paramètre 
 				 */
 				if(joueur.equals(grille_[x][y].getJoueur())  && !grille_[x][y].equals(c))
 					return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -189,24 +188,21 @@ public class Grille
 		int yMin;
 		int yMax;
 
-		// si on se trouve sur la 1ère ligne ou la dernière
-		if(c.getX() == 0 || c.getX() == grille_.length -1) {
-			/* si on est sur la 1ère
-			 * le min est la coordonnée de la case
-			 * et le max est la case d'en dessous
-			 */
-			if(c.getX() == 0) {
+		/* si on est sur la 1ère
+		 * le min est la coordonnée de la case
+		 * et le max est la case d'en dessous
+		 */
+		if(c.getX() == 0) {
 				xMin = c.getX();
 				xMax = c.getX()+1;
-			}
-			/* si on est sur la dernière
-			 * le min est la coordonnée de la case au dessus
-			 * et le max est la coordonnée de la case
-			 */ 
-			else {
-				xMin = c.getX()-1;
-				xMax = c.getX();
-			}
+		} 
+		/* snon si on est sur la dernière
+		 * le min est la coordonnée de la case au dessus
+		 * et le max est la coordonnée de la case
+		 */ 
+		else if(c.getX() == grille_.length-1){
+			xMin = c.getX()-1;
+			xMax = c.getX();
 		}
 		// sinon, la case ne se trouve pas sur un bord, donc pas de soucis
 		else {
@@ -215,14 +211,12 @@ public class Grille
 		}
 		
 		// même idée pour Y
-		if(c.getY() == 0 || c.getY() == grille_.length -1) {
-			if(c.getY() == 0) {
-				yMin = c.getY();
-				yMax = c.getY()+1;
-			} else {
-				yMin = c.getY()-1;
-				yMax = c.getY();
-			}
+		if(c.getY() == 0 ) {
+			yMin = c.getY();
+			yMax = c.getY()+1;
+		} else if(c.getY() == grille_.length -1){
+			yMin = c.getY()-1;
+			yMax = c.getY();
 		} else {
 			yMin = c.getY()-1;
 			yMax = c.getY()+1;
@@ -235,6 +229,29 @@ public class Grille
 		coordonneesAutourCase[3] = yMax;
 		
 		return coordonneesAutourCase;
+	}
+	
+	public int cardinaliteClasse(Case c){
+		int i = 1;
+		for(Case[] ligne: grille_)
+			for(Case ca: ligne)
+				if(c.equals(ca.getParent())){
+					i+= cardinaliteClasse(ca);
+				}
+		return i;
+	}
+	
+	public int nombreEtoilesClasse(Case c) {
+		int i = 0;
+		
+		if(c.isaEtoile())
+			++i;
+		
+		for(Case[] ligne: grille_)
+			for(Case ca: ligne)
+				if(c.equals(ca.getParent()))
+					i += nombreEtoilesClasse(ca);
+		return i;
 	}
 	
 }
