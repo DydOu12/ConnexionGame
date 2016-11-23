@@ -10,7 +10,7 @@ public class BoutonColorier extends ChoixBouton {
 	public void actionClic(Bouton bouton) {
 		if(bouton.getCouleurBouton() == null){
 			// on colorie la vue
-			bouton.colorer(partie_.getJoueurCour());
+			bouton.colorer(partie_.getJoueurCourant());
 			// on colorie le modèle
 			partie_.colorerCase(bouton.getCase());
 		}

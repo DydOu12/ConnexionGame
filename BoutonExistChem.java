@@ -21,11 +21,10 @@ public class BoutonExistChem extends ChoixBouton{
 			int y2 = case_.getY();
 			
 			boolean existe = partie_.existeChemin(case_, b.getCase());
-			JOptionPane jop = new JOptionPane();
 			if(existe)
-				jop.showMessageDialog(null, "Il existe un chemin entre la Case("+x1+","+y1+") et la Case("+x2+","+y2+")", "Existe chemin ?", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Il existe un chemin entre la Case("+x1+","+y1+") et la Case("+x2+","+y2+")", "Existe chemin ?", JOptionPane.INFORMATION_MESSAGE);
 			else
-				jop.showMessageDialog(null, "Il n'existe pas de chemin entre la Case("+x1+","+y1+") et la Case("+x2+","+y2+")", "Existe chemin ?", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Il n'existe pas de chemin entre la Case("+x1+","+y1+") et la Case("+x2+","+y2+")", "Existe chemin ?", JOptionPane.ERROR_MESSAGE);
 			case_ = null;
 		}
 	}

@@ -1,63 +1,37 @@
+import java.awt.Color;
 import java.util.ArrayList;
 
 
 public class Partie {
-	private Joueur j1_;
-	private Joueur j2_;
-	private Joueur jC_;
+	private Joueur joueurCourant_;
 	private Grille grille;
 	
-	public Partie(Joueur j1, Joueur j2, int n){
-		j1_ = j1;
-		j2_ = j2;
-		jC_ = j1;
+	public Partie(int n){
 		grille = new Grille(n);
-		placerEtoilesAleatoirement();
-	}
-	
-	public void echangerJoueur () {
-		if(jC_.equals(j1_))
-		{
-			jC_ = j2_; 
-		} else 
-		{
-			jC_ = j1_; 
-		}
+		joueurCourant_ = grille.getJoueur1();
 	}
 
-	public Joueur getJoueurCour() {
-		return jC_;
+	public Joueur getJoueurCourant() {
+		return joueurCourant_;
 	}
 	
 	public Grille getGrille() {
 		return grille;
 	}
 	
-	public void colorerCase(Case c) {
-		grille.colorerCase(c, jC_);
-		echangerJoueur();
+	public void echangerJoueur () {
+		if(joueurCourant_.equals(grille.getJoueur1()))
+		{
+			joueurCourant_ = grille.getJoueur2(); 
+		} else 
+		{
+			joueurCourant_ = grille.getJoueur1(); 
+		}
 	}
 	
-	public void placerEtoilesAleatoirement(){
-		int i=0;
-		int x;
-		int y;
-		while (i<4) {
-			x = (int)(Math.random() * grille.getTailleGrille());
-			y = (int)(Math.random() * grille.getTailleGrille());
-			
-			if(grille.getCase(x, y).getJoueur() == null && i%2 == 0){
-				grille.getCase(x, y).setaEtoile(true);
-				grille.getCase(x, y).setJoueur(j1_);
-				++i;
-			}
-			else if(grille.getCase(x, y).getJoueur() == null && i%2 == 1)
-			{
-				grille.getCase(x, y).setaEtoile(true);
-				grille.getCase(x, y).setJoueur(j2_);
-				++i;
-			}
-		}
+	public void colorerCase(Case c) {
+		grille.colorerCase(c, joueurCourant_);
+		echangerJoueur();
 	}
 
 	public ArrayList<Case> afficherComposante(Case ca) {
@@ -66,6 +40,10 @@ public class Partie {
 	
 	public boolean existeChemin(Case c1, Case c2){
 		return grille.existeChemin(c1, c2);
+	}
+	
+	public int[] afficheScores () {
+		return grille.afficheScores();
 	}
 	
 }

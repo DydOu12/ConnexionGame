@@ -31,7 +31,7 @@ public class Fenetre extends JFrame
 		grille = new JPanel();
 		grille.setLayout(new GridLayout(n,n));
 
-		partie = new Partie(new Joueur(Color.BLUE), new Joueur(Color.RED),n); 
+		partie = new Partie(n); 
 
 		Bouton b;
 		boutons = new ArrayList<>();

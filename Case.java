@@ -51,7 +51,6 @@ public class Case
 	{
 		joueur_ = joueur;
 	}
-
 	
 	@Override
 	public String toString() {
@@ -94,6 +93,16 @@ public class Case
 				i += c.cardinaliteCase();
 			return i+1;
 		}
+	}
+	
+	public int getNombreEtoiles() {
+		int i = 0;
+		if (isaEtoile()) {
+			++i;
+		}
+		for (Case fils : fils_)
+			i += fils.getNombreEtoiles();
+		return i;
 	}
 	
 }
