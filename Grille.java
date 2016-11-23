@@ -32,7 +32,7 @@ public class Grille
 	{
 		c.setJoueur(j);
 		
-		int[] coordonneesAutourCase = delimiterCase(c);
+		int[] coordonneesAutourCase = caseAutour(c);
 		int xMin = coordonneesAutourCase[0];
 		int xMax = coordonneesAutourCase[1];
 		int yMin = coordonneesAutourCase[2];
@@ -131,58 +131,59 @@ public class Grille
 	
 	
 	public void placerEtoilesAleatoirement(int nbEtoile){
-		int i=0;
+		int i = 0;
+		Joueur j = joueur1_;
+		
 		int x;
 		int y;
+		Case c;
+		
 		while (i<2*nbEtoile) {
+			// On initialise aléatoirement x et y compris entre 0 et la taille de la grille-1
 			x = (int)(Math.random() * getTailleGrille());
 			y = (int)(Math.random() * getTailleGrille());
 			
-			Case c = grille_[x][y];
+			c = grille_[x][y];
 			
 			// s'il n'y a pas de case de la même couleur autour de la case random
-			if(caseRienAutour(c)){
-				if(c.getJoueur() == null && i%2 == 0){
+			if(casePlacable(c,j)){
+				if(c.getJoueur() == null){
+					
 					c.setaEtoile(true);
-					c.setJoueur(joueur1_);
-					++i;			
+					c.setJoueur(j);
 					classes_.add(c);
-				}
-				else if(c.getJoueur() == null && i%2 == 1)
-				{
-					c.setaEtoile(true);
-					c.setJoueur(joueur2_);
-					++i;
-					classes_.add(c);
+					
+					if(i++%2 == 0)
+						j = joueur2_;
+					else 
+						j = joueur1_;				
 				}
 			}			
 		}
 	}
 	
-	public boolean caseRienAutour(Case c){
-		int[] coordonneesAutourCase = delimiterCase(c);
-		int xMin = coordonneesAutourCase[0];
-		int xMax = coordonneesAutourCase[1];
-		int yMin = coordonneesAutourCase[2];
-		int yMax = coordonneesAutourCase[3];
+	public boolean casePlacable(Case c, Joueur joueur){
+		int[] caseAutour = caseAutour(c);
+		int xMin = caseAutour[0];
+		int xMax = caseAutour[1];
+		int yMin = caseAutour[2];
+		int yMax = caseAutour[3];
 		
 		for (int x = xMin; x <= xMax; ++x){
 			for (int y = yMin; y <= yMax; ++y){
-				/* si la case observée a un déjà un joueur et
-				 *                     qu'elle n'est pas égal à la case en paramètre */
-				if(grille_[x][y].getJoueur() != null  && !grille_[x][y].equals(c))
-					/* si la case observée est de la même couleur que la case en paramètre
-					 * on retourne false
-					 * */
-					if(grille_[x][y].getJoueur().equals(c.getJoueur()))
-						return false;
+				/* 
+				 * si la case observée a joueur différent du joueur qui doit obtenir la nouvelle case et
+				 * qu'elle n'est pas égale à la case en paramètre 
+				 */
+				if(joueur.equals(grille_[x][y].getJoueur())  && !grille_[x][y].equals(c))
+					return false;
 			}
 		}
 		
 		return true;
 	}
 	
-	public int[] delimiterCase(Case c){
+	public int[] caseAutour(Case c){
 		int xMin;
 		int xMax;
 		int yMin;
