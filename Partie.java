@@ -6,8 +6,8 @@ public class Partie {
 	private Joueur joueurCourant_;
 	private Grille grille;
 	
-	public Partie(int n){
-		grille = new Grille(n);
+	public Partie(int n, int nbEtoiles){
+		grille = new Grille(n, nbEtoiles);
 		joueurCourant_ = grille.getJoueur1();
 	}
 

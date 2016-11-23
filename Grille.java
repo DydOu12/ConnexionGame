@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Grille 
 {
@@ -11,7 +10,7 @@ public class Grille
 	private Joueur joueur2_;
 	private HashSet<Case> classes_;
 	
-	public Grille(int n)
+	public Grille(int n, int nbEtoiles)
 	{
 		grille_ = new Case[n][n];
 		classes_ = new HashSet<>();
@@ -26,56 +25,18 @@ public class Grille
 				this.grille_[i][j] = c;
 			}
 		
-		placerEtoilesAleatoirement();
+		placerEtoilesAleatoirement(nbEtoiles);
 	}
 	
 	public void colorerCase(Case c, Joueur j)
 	{
 		c.setJoueur(j);
-
-		int xMin;
-		int xMax;
-		int yMin;
-		int yMax;
-
-		// si on se trouve sur la 1ère ligne ou la dernière
-		if(c.getX() == 0 || c.getX() == grille_.length -1) {
-			/* si on est sur la 1ère
-			 * le min est la coordonnée de la case
-			 * et le max est la case d'en dessous
-			 */
-			if(c.getX() == 0) {
-				xMin = c.getX();
-				xMax = c.getX()+1;
-			}
-			/* si on est sur la dernière
-			 * le min est la coordonnée de la case au dessus
-			 * et le max est la coordonnée de la case
-			 */ 
-			else {
-				xMin = c.getX()-1;
-				xMax = c.getX();
-			}
-		}
-		// sinon, la case ne se trouve pas sur un bord, donc pas de soucis
-		else {
-			xMin = c.getX()-1;
-			xMax = c.getX()+1;
-		}
 		
-		// même idée pour Y
-		if(c.getY() == 0 || c.getY() == grille_.length -1) {
-			if(c.getY() == 0) {
-				yMin = c.getY();
-				yMax = c.getY()+1;
-			} else {
-				yMin = c.getY()-1;
-				yMax = c.getY();
-			}
-		} else {
-			yMin = c.getY()-1;
-			yMax = c.getY()+1;
-		} 
+		int[] coordonneesAutourCase = delimiterCase(c);
+		int xMin = coordonneesAutourCase[0];
+		int xMax = coordonneesAutourCase[1];
+		int yMin = coordonneesAutourCase[2];
+		int yMax = coordonneesAutourCase[3];
 		
 		Case caseActuelle;
 		Case classeCaseActuelle;
@@ -118,7 +79,6 @@ public class Grille
 		}
 		
 		classes_.add(nouvelleClasse);
-		System.out.println(classes_);
 	}
 	
 	public int getTailleGrille(){
@@ -170,31 +130,105 @@ public class Grille
 	}
 	
 	
-	public void placerEtoilesAleatoirement(){
+	public void placerEtoilesAleatoirement(int nbEtoile){
 		int i=0;
 		int x;
 		int y;
-		while (i<8) {
+		while (i<2*nbEtoile) {
 			x = (int)(Math.random() * getTailleGrille());
 			y = (int)(Math.random() * getTailleGrille());
 			
 			Case c = grille_[x][y];
 			
-			if(c.getJoueur() == null && i%2 == 0){
-				c.setaEtoile(true);
-				c.setJoueur(joueur1_);
-				++i;			
-				classes_.add(c);
-			}
-			else if(c.getJoueur() == null && i%2 == 1)
-			{
-				c.setaEtoile(true);
-				c.setJoueur(joueur2_);
-				++i;
-				classes_.add(c);
-			}
-			
+			if(caseRienAutour(c)){
+				if(c.getJoueur() == null && i%2 == 0){
+					c.setaEtoile(true);
+					c.setJoueur(joueur1_);
+					++i;			
+					classes_.add(c);
+				}
+				else if(c.getJoueur() == null && i%2 == 1)
+				{
+					c.setaEtoile(true);
+					c.setJoueur(joueur2_);
+					++i;
+					classes_.add(c);
+				}
+			}			
 		}
+	}
+	
+	public boolean caseRienAutour(Case c){
+		int[] coordonneesAutourCase = delimiterCase(c);
+		int xMin = coordonneesAutourCase[0];
+		int xMax = coordonneesAutourCase[1];
+		int yMin = coordonneesAutourCase[2];
+		int yMax = coordonneesAutourCase[3];
+		
+		for (int x = xMin; x <= xMax; ++x){
+			for (int y = yMin; y <= yMax; ++y){
+				/* si la case observée a un déjà un joueur et
+				 *                     qu'elle n'est pas égal à la case en paramètre */
+				if(grille_[x][y].getJoueur() != null && !grille_[x][y].equals(c))
+					return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public int[] delimiterCase(Case c){
+		int xMin;
+		int xMax;
+		int yMin;
+		int yMax;
+
+		// si on se trouve sur la 1ère ligne ou la dernière
+		if(c.getX() == 0 || c.getX() == grille_.length -1) {
+			/* si on est sur la 1ère
+			 * le min est la coordonnée de la case
+			 * et le max est la case d'en dessous
+			 */
+			if(c.getX() == 0) {
+				xMin = c.getX();
+				xMax = c.getX()+1;
+			}
+			/* si on est sur la dernière
+			 * le min est la coordonnée de la case au dessus
+			 * et le max est la coordonnée de la case
+			 */ 
+			else {
+				xMin = c.getX()-1;
+				xMax = c.getX();
+			}
+		}
+		// sinon, la case ne se trouve pas sur un bord, donc pas de soucis
+		else {
+			xMin = c.getX()-1;
+			xMax = c.getX()+1;
+		}
+		
+		// même idée pour Y
+		if(c.getY() == 0 || c.getY() == grille_.length -1) {
+			if(c.getY() == 0) {
+				yMin = c.getY();
+				yMax = c.getY()+1;
+			} else {
+				yMin = c.getY()-1;
+				yMax = c.getY();
+			}
+		} else {
+			yMin = c.getY()-1;
+			yMax = c.getY()+1;
+		} 
+		
+		int[] coordonneesAutourCase = new int[4];
+		coordonneesAutourCase[0] = xMin;
+		coordonneesAutourCase[1] = xMax;
+		coordonneesAutourCase[2] = yMin;
+		coordonneesAutourCase[3] = yMax;
+		
+		return coordonneesAutourCase;
 	}
 	
 }

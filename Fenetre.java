@@ -17,13 +17,13 @@ public class Fenetre extends JFrame
 	private ChoixBouton bExistChem;
 	private ChoixBouton bNbCasesMin;
 	private ChoixBouton bNbEtoiles;
-	private ChoixBouton bScore;
+	private BoutonScore bScore;
 	private ChoixBouton bReliComp;
 	private BoutonJouer bJouer;
 	private Partie partie;
 	private ArrayList<Bouton> boutons;
 	
-	public Fenetre(String titre, int n)
+	public Fenetre(String titre, int n, int nbEtoiles)
 	{		
 		panneau = new JPanel();
 		panneau.setLayout(new BorderLayout());
@@ -31,7 +31,7 @@ public class Fenetre extends JFrame
 		grille = new JPanel();
 		grille.setLayout(new GridLayout(n,n));
 
-		partie = new Partie(n); 
+		partie = new Partie(n, nbEtoiles); 
 
 		Bouton b;
 		boutons = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Fenetre extends JFrame
 		menu.add(bNbCasesMin);
 		bNbEtoiles = new BoutonNbEtoiles(boutons, partie); 
 		menu.add(bNbEtoiles);
-		bScore = new BoutonScore(boutons, partie);
+		bScore = new BoutonScore("Scores", this);
 		menu.add(bScore);
 		bReliComp = new BoutonReliComp(boutons, partie); 
 		menu.add(bReliComp);
@@ -104,7 +104,7 @@ public class Fenetre extends JFrame
 		return bNbEtoiles;
 	}
 
-	public ChoixBouton getbScore() {
+	public BoutonScore getbScore() {
 		return bScore;
 	}
 
