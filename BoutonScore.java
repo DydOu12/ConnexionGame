@@ -13,4 +13,7 @@ public class BoutonScore extends ChoixBouton {
 		JOptionPane.showMessageDialog(null, "Score du joueur Bleu : "+scores[0]+"\nScore du joueur Rouge : "+scores[1], "Scores", JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	@Override
+	public void actionClic(Bouton bouton) {}
+
 }

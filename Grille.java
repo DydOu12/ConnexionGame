@@ -22,8 +22,10 @@ public class Grille
 			for(int j=0; j<n; ++j)
 			{
 				c = new Case(i,j);
-				this.grille_[i][j] = c;
+				grille_[i][j] = c;
+				classes_.add(c);
 			}
+		System.out.println(classes_);
 		
 		placerEtoilesAleatoirement(nbEtoiles);
 	}
@@ -116,13 +118,16 @@ public class Grille
 		
 		for(Case c : classes_) {
 			nbEtoiles = c.getNombreEtoiles();
-			if (joueur1_.equals(c.getJoueur()) && scores[0] < nbEtoiles) {
+			if (joueur1_.equals(c.getJoueur()) && scores[0] < nbEtoiles)
 				scores[0] = nbEtoiles;
-			} else if (scores[1] < nbEtoiles){
+			else if (scores[1] < nbEtoiles)
 				scores[1] = nbEtoiles;
-			}
 		}
 		return scores;
+	}
+	
+	public int getNombreEtoiles (Case c) {
+		return c.getNombreEtoiles();
 	}
 
 	public HashSet<Case> getClasses() {
@@ -231,27 +236,45 @@ public class Grille
 		return coordonneesAutourCase;
 	}
 	
-	public int cardinaliteClasse(Case c){
-		int i = 1;
-		for(Case[] ligne: grille_)
-			for(Case ca: ligne)
-				if(c.equals(ca.getParent())){
-					i+= cardinaliteClasse(ca);
+	public boolean relieComposantes(Case c, Joueur joueur) {
+		int[] caseAutour = caseAutour(c);
+		int xMin = caseAutour[0];
+		int xMax = caseAutour[1];
+		int yMin = caseAutour[2];
+		int yMax = caseAutour[3];
+		
+		Case premiereClasseTrouvee = null;
+		Case ca;
+		Case classe;
+		
+		for (int x = xMin; x <= xMax; ++x){
+			for (int y = yMin; y <= yMax; ++y){
+				// Case observée
+				ca = grille_[x][y];
+				// Classe de la case observée
+				classe = ca.getClasse();
+				
+				/*
+				 *  Si le joueur de la case est égal au joueur en paramètre
+				 *  et que la classe de la case observée est différente de celles entourant la case cliquée
+				 */
+
+				if(joueur.equals(ca.getJoueur()) && !ca.equals(c) && !classe.equals(premiereClasseTrouvee)){
+					if(premiereClasseTrouvee == null)
+						premiereClasseTrouvee = classe;
+					else 
+						return true;
 				}
-		return i;
+			}
+		}
+		return false;
 	}
 	
-	public int nombreEtoilesClasse(Case c) {
-		int i = 0;
-		
-		if(c.isaEtoile())
-			++i;
-		
-		for(Case[] ligne: grille_)
-			for(Case ca: ligne)
-				if(c.equals(ca.getParent()))
-					i += nombreEtoilesClasse(ca);
-		return i;
+	public int relierCasesMin(Case case1, Case case2) {
+		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
+			return 1;
+		} else {
+			return -1;
+		}
 	}
-	
 }

@@ -18,12 +18,13 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 		addActionListener(this);
 		setEnabled(false);
 	}
+	
 	public ChoixBouton (String description, ArrayList<Bouton> boutons, Partie partie) {
 		this(description, partie);
 		boutons_ = boutons;
 	}
 	
-	public void actionClic(Bouton bouton) {}
+	public abstract void actionClic(Bouton bouton);
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -31,7 +32,7 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 			bouton.setChoixBouton(this);
 		for (ChoixBouton action : actions_)
 			action.setBackground(null);
-		setBackground(Color.YELLOW);
+		setBackground(partie_.getJoueurCourant().getCouleur());
 	}
 
 	public void setActions(ArrayList<ChoixBouton> actions) {

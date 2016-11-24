@@ -26,13 +26,10 @@ public class BoutonJouer extends JButton implements ActionListener{
 		for (ChoixBouton action : actions_)
 			action.setEnabled(true);
 		
-		colorier_.setBackground(Color.YELLOW);
+		colorier_.setBackground(partie_.getJoueurCourant().getCouleur());
 		this.setEnabled(false);
 		
-		for(Bouton bouton : boutons_){
+		for(Bouton bouton : boutons_)
 			bouton.setEnabled(true);
-			ChoixBouton cB = new BoutonColorier(boutons_, partie_);
-			bouton.setChoixBouton(cB);
-		}
 	}
 }

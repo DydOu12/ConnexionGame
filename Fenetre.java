@@ -31,27 +31,13 @@ public class Fenetre extends JFrame
 
 		actions = new ArrayList<>();
 		
-		Bouton b;
-		boutons = new ArrayList<>();
-		panneau.add(grille, BorderLayout.CENTER);
-		for(int i=0; i<n; ++i){
-			for(int j=0; j<n; ++j){
-				b = new Bouton(partie.getGrille().getCase(i, j));
-				b.setText(i+","+j);
-				grille.add(b);
-				boutons.add(b);
-				if(partie.getGrille().getCase(i, j).isaEtoile()) {
-					b.setText("*");
-					b.setFont(new Font(b.getFont().getFontName(), Font.BOLD, 40));
-					b.colorer(partie.getGrille().getCase(i, j).getJoueur());
-				}
-			}
-		}		
-		
 		menu = new JPanel();
+		
 		menu.setLayout(new GridLayout(8,0));
 		panneau.add(menu, BorderLayout.EAST);
-		
+
+		boutons = new ArrayList<>();
+
 		ChoixBouton bColor;
 		ChoixBouton bAffComp;
 		ChoixBouton bExistChem;
@@ -62,7 +48,7 @@ public class Fenetre extends JFrame
 		BoutonJouer bJouer;
 		
 		bColor = new BoutonColorier(boutons, partie);
-		menu.add(bColor);
+		menu.add(bColor);		
 		actions.add(bColor);
 		bAffComp = new BoutonAffComp(boutons, partie);
 		menu.add(bAffComp);
@@ -82,9 +68,27 @@ public class Fenetre extends JFrame
 		bReliComp = new BoutonReliComp(boutons, partie); 
 		menu.add(bReliComp);
 		actions.add(bReliComp);
+		
+		Bouton b;
+		
+		panneau.add(grille, BorderLayout.CENTER);
+		for(int i=0; i<n; ++i){
+			for(int j=0; j<n; ++j){
+				b = new Bouton(partie.getGrille().getCase(i, j), bColor);
+				b.setText(i+","+j);
+				grille.add(b);
+				boutons.add(b);
+				if(partie.getGrille().getCase(i, j).isaEtoile()) {
+					b.setText("*");
+					b.setFont(new Font(b.getFont().getFontName(), Font.BOLD, 40));
+					b.colorer(partie.getGrille().getCase(i, j).getJoueur());
+				}
+			}
+		}		
+
 		bJouer = new BoutonJouer("Jeu 2 joueurs", actions, boutons, partie, bColor);
 		menu.add(bJouer);
-
+		
 		for (ChoixBouton action: actions)
 			action.setActions(actions);
 		

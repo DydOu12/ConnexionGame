@@ -104,5 +104,45 @@ public class Case
 			i += fils.getNombreEtoiles();
 		return i;
 	}
+
+	@Override
+	public int hashCode() {
+		return x_*10+y_;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Case other = (Case) obj;
+		if (aEtoile_ != other.aEtoile_)
+			return false;
+		if (fils_ == null) {
+			if (other.fils_ != null)
+				return false;
+		} else if (!fils_.equals(other.fils_))
+			return false;
+		if (joueur_ == null) {
+			if (other.joueur_ != null)
+				return false;
+		} else if (!joueur_.equals(other.joueur_))
+			return false;
+		if (parent_ == null) {
+			if (other.parent_ != null)
+				return false;
+		} else if (!parent_.equals(other.parent_))
+			return false;
+		if (x_ != other.x_)
+			return false;
+		if (y_ != other.y_)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

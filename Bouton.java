@@ -1,8 +1,11 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+
+import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
 
 
 public class Bouton extends JButton implements ActionListener
@@ -11,9 +14,10 @@ public class Bouton extends JButton implements ActionListener
 	private Color couleurBouton_;
 	private Case case_;
 	
-	public Bouton(Case ca)
+	public Bouton(Case ca, ChoixBouton choixBouton)
 	{
 		case_ = ca;
+		choixBouton_ = choixBouton;
 		addActionListener(this);
 		setEnabled(false);
 		couleurBouton_ = null;
@@ -39,6 +43,11 @@ public class Bouton extends JButton implements ActionListener
 	public void colorer(Joueur joueur){	
 		setBackground(joueur.getCouleur());
 		couleurBouton_ = joueur.getCouleur();
+	}
+	
+	public void colorer(Joueur joueur, Joueur joueurSuivant){	
+		colorer(joueur);
+		choixBouton_.setBackground(joueurSuivant.getCouleur());
 	}
 
 	@Override
