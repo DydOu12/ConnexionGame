@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 public class BoutonAffComp extends ChoixBouton {
 	public BoutonAffComp(ArrayList<Bouton> boutons, Partie partie){
 		super("Afficher la composante", boutons, partie);

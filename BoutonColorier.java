@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 public class BoutonColorier extends ChoixBouton {
 
 	public BoutonColorier(ArrayList<Bouton> boutons, Partie partie){
