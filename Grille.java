@@ -25,7 +25,6 @@ public class Grille
 				grille_[i][j] = c;
 				classes_.add(c);
 			}
-		System.out.println(classes_);
 		
 		placerEtoilesAleatoirement(nbEtoiles);
 	}
@@ -34,34 +33,26 @@ public class Grille
 	{
 		c.setJoueur(j);
 		
-		int[] coordonneesAutourCase = caseAutour(c);
-		int xMin = coordonneesAutourCase[0];
-		int xMax = coordonneesAutourCase[1];
-		int yMin = coordonneesAutourCase[2];
-		int yMax = coordonneesAutourCase[3];
+		ArrayList<Case> casesAutour = casesAutour(c);
 		
-		Case caseActuelle;
 		Case classeCaseActuelle;
 		
 		Case nouvelleClasse = c;
 		
 		Set<Case> classes = new HashSet<>();
-		for (int x = xMin; x <= xMax; ++x){
-			for (int y = yMin; y <= yMax; ++y){
-				caseActuelle = grille_[x][y];
-				// si x et y sont differents et le joueur est identique
-				if(!(x == c.getX() && y == c.getY()) && j.equals(caseActuelle.getJoueur())){
-					classeCaseActuelle = caseActuelle.getClasse();
+		for (Case caseActuelle : casesAutour) {
+			// si la case observée à un joueur identique à j
+			if(j.equals(caseActuelle.getJoueur())){
+				classeCaseActuelle = caseActuelle.getClasse();
 					
-					// Si la classe que l'on possède déjà est différente à celle que l'on va comparer
-					if (!classeCaseActuelle.equals(nouvelleClasse)) {
-						// Si la cardinalite de la classe de la case que l'on observe est superieure à nouvelleClasse 
-						if (classeCaseActuelle.cardinaliteCase() > nouvelleClasse.cardinaliteCase()) {
-							classes.add(nouvelleClasse);
-							nouvelleClasse = classeCaseActuelle;
-						} else {
-							classes.add(classeCaseActuelle);
-						}
+				// Si la classe que l'on possède déjà est différente à celle que l'on va comparer
+				if (!classeCaseActuelle.equals(nouvelleClasse)) {
+					// Si la cardinalite de la classe de la case que l'on observe est superieure à nouvelleClasse 
+					if (classeCaseActuelle.cardinaliteCase() > nouvelleClasse.cardinaliteCase()) {
+						classes.add(nouvelleClasse);
+						nouvelleClasse = classeCaseActuelle;
+					} else {
+						classes.add(classeCaseActuelle);
 					}
 				}
 			}
@@ -168,30 +159,27 @@ public class Grille
 	}
 	
 	public boolean casePlacable(Case c, Joueur joueur){
-		int[] caseAutour = caseAutour(c);
-		int xMin = caseAutour[0];
-		int xMax = caseAutour[1];
-		int yMin = caseAutour[2];
-		int yMax = caseAutour[3];
-		
-		for (int x = xMin; x <= xMax; ++x){
-			for (int y = yMin; y <= yMax; ++y){
+		ArrayList<Case> casesAutour = casesAutour(c);
+
+		for (Case caseObservee : casesAutour) {
 				/* 
 				 * si la case observée a un joueur égal au joueur qui doit obtenir la nouvelle case et
 				 * qu'elle n'est pas égale à la case en paramètre 
 				 */
-				if(joueur.equals(grille_[x][y].getJoueur())  && !grille_[x][y].equals(c))
+			if(joueur.equals(caseObservee.getJoueur())  && !caseObservee.equals(c))
 					return false;
-			}
 		}
+		
 		return true;
 	}
 	
-	public int[] caseAutour(Case c){
+	public ArrayList<Case> casesAutour(Case c){
 		int xMin;
 		int xMax;
 		int yMin;
 		int yMax;
+		
+		ArrayList<Case> cases = new ArrayList<>();
 
 		/* si on est sur la 1ère
 		 * le min est la coordonnée de la case
@@ -227,44 +215,38 @@ public class Grille
 			yMax = c.getY()+1;
 		} 
 		
-		int[] coordonneesAutourCase = new int[4];
-		coordonneesAutourCase[0] = xMin;
-		coordonneesAutourCase[1] = xMax;
-		coordonneesAutourCase[2] = yMin;
-		coordonneesAutourCase[3] = yMax;
-		
-		return coordonneesAutourCase;
+		for (int x = xMin; x <= xMax; ++x)
+			for (int y = yMin; y <= yMax; ++y)
+				/* 
+				 * si la case observée a un joueur égal au joueur qui doit obtenir la nouvelle case et
+				 * qu'elle n'est pas égale à la case en paramètre 
+				 */
+				if(!c.equals(grille_[x][y]))
+					cases.add(grille_[x][y]);
+
+		return cases;
 	}
 	
 	public boolean relieComposantes(Case c, Joueur joueur) {
-		int[] caseAutour = caseAutour(c);
-		int xMin = caseAutour[0];
-		int xMax = caseAutour[1];
-		int yMin = caseAutour[2];
-		int yMax = caseAutour[3];
+		ArrayList<Case> casesAutour = casesAutour(c);
 		
 		Case premiereClasseTrouvee = null;
-		Case ca;
 		Case classe;
 		
-		for (int x = xMin; x <= xMax; ++x){
-			for (int y = yMin; y <= yMax; ++y){
-				// Case observée
-				ca = grille_[x][y];
-				// Classe de la case observée
-				classe = ca.getClasse();
+		for (Case caseObservee : casesAutour) {
+			// Classe de la case observée
+			classe = caseObservee.getClasse();
 				
-				/*
-				 *  Si le joueur de la case est égal au joueur en paramètre
-				 *  et que la classe de la case observée est différente de celles entourant la case cliquée
-				 */
+			/*
+			 *  Si le joueur de la case est égal au joueur en paramètre
+			 *  et que la classe de la case observée est différente de celles entourant la case cliquée
+			 */
 
-				if(joueur.equals(ca.getJoueur()) && !ca.equals(c) && !classe.equals(premiereClasseTrouvee)){
-					if(premiereClasseTrouvee == null)
-						premiereClasseTrouvee = classe;
-					else 
-						return true;
-				}
+			if(joueur.equals(caseObservee.getJoueur()) && !classe.equals(premiereClasseTrouvee)){
+				if(premiereClasseTrouvee == null)
+					premiereClasseTrouvee = classe;
+				else 
+					return true;
 			}
 		}
 		return false;
@@ -272,7 +254,10 @@ public class Grille
 	
 	public int relierCasesMin(Case case1, Case case2) {
 		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
-			return 1;
+			if(case1.getClasse().equals(case2.getClasse()))
+				return 0;
+			else
+				return 1;
 		} else {
 			return -1;
 		}
