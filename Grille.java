@@ -253,12 +253,19 @@ public class Grille
 	}
 	
 	public int relierCasesMin(Case case1, Case case2) {
+		// Si les 2  joueurs ne sont pas null et egaux 
 		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
-			if(case1.getClasse().equals(case2.getClasse()))
+			// Si les cases appartiennent à la même classe
+			if(case1.getClasse().equals(case2.getClasse())) {
 				return 0;
-			else
-				return 1;
-		} else {
+			}
+			// Si les cases sont de classes différentes
+			else {
+				return 1;				
+			}
+		} 
+		// Si les joueurs sont différents ou un est null
+		else {
 			return -1;
 		}
 	}
