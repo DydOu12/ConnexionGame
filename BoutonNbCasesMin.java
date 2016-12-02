@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class BoutonNbCasesMin extends ChoixBouton{
 	
@@ -15,7 +16,11 @@ public class BoutonNbCasesMin extends ChoixBouton{
 		if(case1 == null)
 			case1 = b.getCase();
 		else {
-			System.out.println(partie_.relierCasesMin(case1, b.getCase()));
+			int nbCases = partie_.relierCasesMin(case1, b.getCase());
+			if(nbCases < 0 || nbCases == Integer.MAX_VALUE)
+				JOptionPane.showMessageDialog(null, "Impossible de relier les cases "+case1+" et "+b.getCase(), "Nombre de cases minimums", JOptionPane.INFORMATION_MESSAGE);
+			else 
+				JOptionPane.showMessageDialog(null, "Il faut colorier "+nbCases+" case(s) pour pouvoir relier les cases "+case1+" et "+b.getCase(), "Nombre de cases minimums", JOptionPane.INFORMATION_MESSAGE);
 			case1 = null;
 		}
 		

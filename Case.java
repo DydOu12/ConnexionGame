@@ -18,7 +18,7 @@ public class Case
 		aEtoile_ = false;
 		parent_ = null;
 		fils_ = new ArrayList<>();
-		distance_ = -1;
+		distance_ = Integer.MAX_VALUE;
 	}
 
 	public int getDistance() {
@@ -64,7 +64,7 @@ public class Case
 	
 	@Override
 	public String toString() {
-		return "Case [x=" + x_ + ", y=" + y_ +"]\n";
+		return "("+x_ + ", " + y_ +")";
 	}
 
 	public int getX() {
@@ -129,30 +129,12 @@ public class Case
 		if (getClass() != obj.getClass())
 			return false;
 		Case other = (Case) obj;
-		if (aEtoile_ != other.aEtoile_)
-			return false;
-		if (fils_ == null) {
-			if (other.fils_ != null)
-				return false;
-		} else if (!fils_.equals(other.fils_))
-			return false;
-		if (joueur_ == null) {
-			if (other.joueur_ != null)
-				return false;
-		} else if (!joueur_.equals(other.joueur_))
-			return false;
-		if (parent_ == null) {
-			if (other.parent_ != null)
-				return false;
-		} else if (!parent_.equals(other.parent_))
-			return false;
 		if (x_ != other.x_)
 			return false;
 		if (y_ != other.y_)
 			return false;
 		return true;
 	}
-	
-	
+
 	
 }

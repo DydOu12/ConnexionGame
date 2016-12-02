@@ -9,7 +9,7 @@ public class BoutonNbEtoiles extends ChoixBouton{
 	
 	@Override
 	public void actionClic(Bouton b) {
-		JOptionPane.showMessageDialog(null, "La composante de la case cliquée contient "+partie_.getNombreEtoiles(b.getCase().getClasse())
+		JOptionPane.showMessageDialog(null, "La composante de la case cliquée contient "+partie_.getNombreEtoiles(b.getCase())
 +" case(s) étoiles", "Nombre étoiles", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

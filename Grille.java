@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Grille 
 {
-	private Case[][] grille_;
+	public Case[][] grille_;
 	private Joueur joueur1_;
 	private Joueur joueur2_;
 	private HashSet<Case> classes_;
@@ -252,68 +252,92 @@ public class Grille
 		return false;
 	}
 	
-	public int relierCasesMin(Case case1, Case case2) {
-		// Si les 2  joueurs ne sont pas null et egaux 
-		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
-			// Si les cases appartiennent à la même classe
-			if(case1.getClasse().equals(case2.getClasse())) {
-				return 0;
-			}
-			// Si les cases sont de classes différentes
-			else {
-				// on récupère les cases autour de case1
-				ArrayList<Case> casesAutour = casesAutour(case1);
-				Case classe = case1.getClasse();
-				Joueur j = case1.getJoueur();
-				for(Case c : casesAutour){
-					if(c.getJoueur() == null || !c.getClasse().equals(classe)) {
-						c.setDistance(1);
-						fonctionSansNom(c, j, case2);
-					}
-					else if (!c.getJoueur().equals(j)) {
-						c.setDistance(Integer.MAX_VALUE);
-					}
-					else {
-						fonctionSansNom(c, j, case2);
-					}
-				}
-				return case2.getDistance();				
-			}
-		} 
-		// Si les joueurs sont différents ou un est null
-		else {
-			return -1;
-		}
-	}
-	
-	public void fonctionSansNom(Case c, Joueur j, Case caseDest){
-		ArrayList<Case> casesAut = casesAutour(c);
-		Case classe = c.getClasse();
-		for(Case ca : casesAut){
-			if (!ca.equals(caseDest)) {
-				// Joueur de la case null ou joueur identique à j
-				if(ca.getJoueur() == null) {
-					// Si la distance de la case observée est supérieure à celle la case c
-					if (ca.getDistance() == -1 || c.getDistance() < ca.getDistance()) {
-						ca.setDistance(c.getDistance()+1);
-						fonctionSansNom(ca, j, caseDest);
-					} 
-				// classe des deux cases identiques
-				} else if (c.getDistance() < ca.getDistance() && (ca.getClasse().equals(classe) || ca.getJoueur().equals(j))) {
-					ca.setDistance(c.getDistance());
-					fonctionSansNom(ca, j, caseDest);
-				}
-			} else {
-				if (ca.getDistance() == -1 || c.getDistance() < ca.getDistance()) {
-					ca.setDistance(c.getDistance());
+	public void relierCasesMin(Case case1, Joueur j) {
+		ArrayList<Case> casesAut = casesAutour(case1);
+		for(Case c : casesAut){
+			if (case1.getDistance() < c.getDistance()) {
+				// Joueur de la case null ou joueur identique à j ou 
+				// Si la distance de la case observée est supérieure à celle la case c
+				if(c.getJoueur() == null ) {
+					c.setDistance(case1.getDistance()+1);
+					relierCasesMin(c, j);
+				// Case avec le même joueur
+				} else if (j!=null && j.equals(c.getJoueur())) {
+					c.setDistance(case1.getDistance());
+					relierCasesMin(c, j);
+				} else {
+					c.setDistance(-1);
 				}
 			}
 		}
 	}
 	
-	public void initDistCase(){
+//	public int relierCasesMin(Case case1, Case case2) {
+//		// Si les 2  joueurs ne sont pas null et egaux 
+//		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
+//			// Si les cases appartiennent à la même classe
+//			if(case1.getClasse().equals(case2.getClasse())) {
+//				return 0;
+//			}
+//			// Si les cases sont de classes différentes
+//			else {
+//				// on récupère les cases autour de case1
+//				ArrayList<Case> casesAutour = casesAutour(case1);
+//				Joueur j = case1.getJoueur();
+//				case1.setDistance(0);
+//				for(Case c : casesAutour){
+//					if(c.getJoueur() == null) {
+//						c.setDistance(1);
+//						fonctionSansNom(c, case2);
+//					}
+//					else if (c.getJoueur().equals(j)){
+//						c.setDistance(0);
+//						fonctionSansNom(c, case2);
+//					} else {
+//						c.setDistance(-1);
+//					}
+//				}
+//				for(Case[] l : grille_) {
+//					for (Case c : l)
+//						System.out.print(c.getDistance()+" ");
+//					System.out.print("\n");
+//				}
+//				return case2.getDistance();				
+//			}
+//		} 
+//		// Si les joueurs sont différents ou un est null
+//		else {
+//			return -1;
+//		}
+//	}
+//	
+//	public void fonctionSansNom(Case c, Case caseDest){
+//		ArrayList<Case> casesAut = casesAutour(c);
+//		Joueur j = caseDest.getJoueur(); 
+//		for(Case ca : casesAut){
+//			if (!ca.equals(caseDest) && c.getDistance() < ca.getDistance()) {
+//				// Joueur de la case null ou joueur identique à j ou 
+//				// Si la distance de la case observée est supérieure à celle la case c
+//				if(ca.getJoueur() == null ) {
+//					ca.setDistance(c.getDistance()+1);
+//					fonctionSansNom(ca, caseDest);
+//				// Case avec le même joueur
+//				} else if (j.equals(ca.getJoueur())) {
+//					ca.setDistance(c.getDistance());
+//					fonctionSansNom(ca, caseDest);
+//				} else {
+//					ca.setDistance(-1);
+//				}
+//			} else if (c.getDistance() < ca.getDistance()) {
+//				ca.setDistance(c.getDistance());
+//			}
+//		}
+//	}
+	
+	public void initDistCase(Case caseDepart){
 		for(Case[] ligne : grille_)
 			for(Case c : ligne)
-				c.setDistance(-1);
+				c.setDistance(Integer.MAX_VALUE);
+		caseDepart.setDistance(0);
 	}
 }

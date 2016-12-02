@@ -47,7 +47,7 @@ public class Partie {
 	}
 	
 	public int getNombreEtoiles(Case c){
-		return grille_.getNombreEtoiles(c);
+		return grille_.getNombreEtoiles(c.getClasse());
 	}
 	
 	public boolean relieComposantes(Case c) {
@@ -55,7 +55,8 @@ public class Partie {
 	}
 	
 	public int relierCasesMin(Case case1, Case case2) {
-		grille_.initDistCase();
-		return grille_.relierCasesMin(case1, case2);
+		grille_.initDistCase(case1);
+		grille_.relierCasesMin(case1, case1.getJoueur());
+		return case2.getDistance();
 	}
 }
