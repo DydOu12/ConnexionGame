@@ -17,10 +17,12 @@ public class BoutonNbCasesMin extends ChoixBouton{
 			case1 = b.getCase();
 		else {
 			int nbCases = partie_.relierCasesMin(case1, b.getCase());
-			if(nbCases < 0 || nbCases == Integer.MAX_VALUE)
-				JOptionPane.showMessageDialog(null, "Impossible de relier les cases "+case1+" et "+b.getCase(), "Nombre de cases minimums", JOptionPane.INFORMATION_MESSAGE);
+			if(nbCases == Integer.MAX_VALUE)
+				JOptionPane.showMessageDialog(null, "Un obstacle bloque la liaison des cases "+case1+" et "+b.getCase(), "Liaison impossible", JOptionPane.ERROR_MESSAGE);
+			else if (nbCases == -2)
+				JOptionPane.showMessageDialog(null, "Les cases "+case1+" et "+b.getCase()+ " n'appartiennent pas au même joueur", "Liaison impossible", JOptionPane.ERROR_MESSAGE);
 			else 
-				JOptionPane.showMessageDialog(null, "Il faut colorier "+nbCases+" case(s) pour pouvoir relier les cases "+case1+" et "+b.getCase(), "Nombre de cases minimums", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Il faut colorier "+nbCases+" case(s) pour pouvoir relier les cases "+case1+" et "+b.getCase(), "Nombre de case(s) minimum(s)", JOptionPane.INFORMATION_MESSAGE);
 			case1 = null;
 		}
 		

@@ -55,8 +55,15 @@ public class Partie {
 	}
 	
 	public int relierCasesMin(Case case1, Case case2) {
-		grille_.initDistCase(case1);
-		grille_.relierCasesMin(case1, case1.getJoueur());
-		return case2.getDistance();
+		Joueur jCase1 = case1.getJoueur();
+		Joueur jCase2 = case2.getJoueur();
+		if(jCase1 != null && jCase1.equals(jCase2)) {
+			grille_.initDistCase(case1);
+			grille_.relierCasesMin(case1, case1.getJoueur());
+			return case2.getDistance();
+		} else {
+			return -2;
+		}
+
 	}
 }
