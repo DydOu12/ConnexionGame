@@ -55,6 +55,7 @@ public class Partie {
 	}
 	
 	public int relierCasesMin(Case case1, Case case2) {
+		grille_.initDistCase();
 		return grille_.relierCasesMin(case1, case2);
 	}
 }

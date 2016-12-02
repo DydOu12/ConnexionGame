@@ -261,12 +261,59 @@ public class Grille
 			}
 			// Si les cases sont de classes différentes
 			else {
-				return 1;				
+				// on récupère les cases autour de case1
+				ArrayList<Case> casesAutour = casesAutour(case1);
+				Case classe = case1.getClasse();
+				Joueur j = case1.getJoueur();
+				for(Case c : casesAutour){
+					if(c.getJoueur() == null || !c.getClasse().equals(classe)) {
+						c.setDistance(1);
+						fonctionSansNom(c, j, case2);
+					}
+					else if (!c.getJoueur().equals(j)) {
+						c.setDistance(Integer.MAX_VALUE);
+					}
+					else {
+						fonctionSansNom(c, j, case2);
+					}
+				}
+				return case2.getDistance();				
 			}
 		} 
 		// Si les joueurs sont différents ou un est null
 		else {
 			return -1;
 		}
+	}
+	
+	public void fonctionSansNom(Case c, Joueur j, Case caseDest){
+		ArrayList<Case> casesAut = casesAutour(c);
+		Case classe = c.getClasse();
+		for(Case ca : casesAut){
+			if (!ca.equals(caseDest)) {
+				// Joueur de la case null ou joueur identique à j
+				if(ca.getJoueur() == null) {
+					// Si la distance de la case observée est supérieure à celle la case c
+					if (ca.getDistance() == -1 || c.getDistance() < ca.getDistance()) {
+						ca.setDistance(c.getDistance()+1);
+						fonctionSansNom(ca, j, caseDest);
+					} 
+				// classe des deux cases identiques
+				} else if (c.getDistance() < ca.getDistance() && (ca.getClasse().equals(classe) || ca.getJoueur().equals(j))) {
+					ca.setDistance(c.getDistance());
+					fonctionSansNom(ca, j, caseDest);
+				}
+			} else {
+				if (ca.getDistance() == -1 || c.getDistance() < ca.getDistance()) {
+					ca.setDistance(c.getDistance());
+				}
+			}
+		}
+	}
+	
+	public void initDistCase(){
+		for(Case[] ligne : grille_)
+			for(Case c : ligne)
+				c.setDistance(-1);
 	}
 }

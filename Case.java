@@ -8,6 +8,7 @@ public class Case
 	private boolean aEtoile_;
 	private Case parent_;
 	private ArrayList<Case> fils_;
+	private int distance_;
 
 	public Case(int x, int y)
 	{
@@ -17,6 +18,15 @@ public class Case
 		aEtoile_ = false;
 		parent_ = null;
 		fils_ = new ArrayList<>();
+		distance_ = -1;
+	}
+
+	public int getDistance() {
+		return distance_;
+	}
+
+	public void setDistance(int distance_) {
+		this.distance_ = distance_;
 	}
 
 	public Case getParent() {

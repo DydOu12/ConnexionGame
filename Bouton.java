@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
-
-
 public class Bouton extends JButton implements ActionListener
 {
 	private ChoixBouton choixBouton_;
