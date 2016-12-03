@@ -1,10 +1,10 @@
-import java.awt.Color;
 import java.util.ArrayList;
 
 
 public class Partie {
 	private Joueur joueurCourant_;
 	private Grille grille_;
+	private Joueur joueurGagnant_;
 	
 	public Partie(int n, int nbEtoiles){
 		grille_ = new Grille(n, nbEtoiles);
@@ -31,6 +31,14 @@ public class Partie {
 	
 	public void colorerCase(Case c) {
 		grille_.colorerCase(c, joueurCourant_);
+		int[] scores = grille_.afficheScores();
+		if (scores[0] > 1 || scores[1] > 1) {
+			if (scores[0] > scores[1])
+				joueurGagnant_ = grille_.getJoueur1();
+			else 
+				joueurGagnant_ = grille_.getJoueur2();
+		}
+		System.out.println(joueurGagnant_);
 		echangerJoueur();
 	}
 
@@ -64,6 +72,23 @@ public class Partie {
 		} else {
 			return -2;
 		}
+	}
+	
+	public boolean partieFinie() {
+		int[] scores = grille_.afficheScores();
+		if (scores[0] == grille_.getNbEtoiles() || scores[1] == grille_.getNbEtoiles() || !grille_.casesEtoilesConnectables())
+			return true;
+		return false;
 
 	}
+	public Joueur joueurGagnant() {
+		int[] scores = grille_.afficheScores();
+		if (scores[0] == grille_.getNbEtoiles())
+			return grille_.getJoueur1();
+		else if (scores[1] == grille_.getNbEtoiles())
+			return grille_.getJoueur2();
+		else 
+			return joueurGagnant_;
+	}
+	
 }

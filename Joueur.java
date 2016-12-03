@@ -3,10 +3,12 @@ import java.awt.Color;
 public class Joueur 
 {
 	private Color couleur;
+	private String pseudo_;
 
-	public Joueur(Color c)
+	public Joueur(Color c, String pseudo)
 	{
 		couleur = c;
+		pseudo_ = pseudo;
 	}
 	
 	public Color getCouleur() {
@@ -28,6 +30,10 @@ public class Joueur
 		} else if (!couleur.equals(other.couleur))
 			return false;
 		return true;
+	}
+	
+	public String getPseudo() {
+		return pseudo_;
 	}
 	
 	@Override

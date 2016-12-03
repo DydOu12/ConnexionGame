@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class BoutonExistChem extends ChoixBouton{

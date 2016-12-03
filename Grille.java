@@ -6,16 +6,20 @@ import java.util.Set;
 public class Grille 
 {
 	public Case[][] grille_;
-	private Joueur joueur1_;
-	private Joueur joueur2_;
+	private Joueur joueur1_, joueur2_;
+	private ArrayList<Case> casesEtoilesJ1_, casesEtoilesJ2_;
 	private HashSet<Case> classes_;
+	private int nbEtoiles_;
 	
 	public Grille(int n, int nbEtoiles)
 	{
 		grille_ = new Case[n][n];
 		classes_ = new HashSet<>();
-		joueur1_ = new Joueur(Color.BLUE);
-		joueur2_ = new Joueur(Color.RED);
+		joueur1_ = new Joueur(Color.BLUE, "BLEU");
+		joueur2_ = new Joueur(Color.RED, "ROUGE");
+		casesEtoilesJ1_ = new ArrayList<>();
+		casesEtoilesJ2_ = new ArrayList<>();
+		nbEtoiles_ = nbEtoiles;
 		
 		Case c;
 		for(int i=0; i<n; ++i)
@@ -129,6 +133,7 @@ public class Grille
 	public void placerEtoilesAleatoirement(int nbEtoile){
 		int i = 0;
 		Joueur j = joueur1_;
+		ArrayList<Case> casesEtoiles = casesEtoilesJ1_;
 		
 		int x;
 		int y;
@@ -142,17 +147,22 @@ public class Grille
 			c = grille_[x][y];
 			
 			// s'il n'y a pas de case de la même couleur autour de la case random
-			if(casePlacable(c,j)){
-				if(c.getJoueur() == null){
+			if(c.getJoueur() == null){
+				if(casePlacable(c,j)){
 					
 					c.setaEtoile(true);
 					c.setJoueur(j);
 					classes_.add(c);
+					casesEtoiles .add(c);
 					
-					if(i++%2 == 0)
+					if(i++%2 == 0) {
 						j = joueur2_;
-					else 
-						j = joueur1_;				
+						casesEtoiles = casesEtoilesJ2_;
+					}
+					else {
+						j = joueur1_;
+						casesEtoiles = casesEtoilesJ1_;
+					}
 				}
 			}			
 		}
@@ -272,72 +282,36 @@ public class Grille
 		}
 	}
 	
-//	public int relierCasesMin(Case case1, Case case2) {
-//		// Si les 2  joueurs ne sont pas null et egaux 
-//		if (case1.getJoueur() != null && case2.getJoueur()!= null && case2.getJoueur().equals(case1.getJoueur())) {
-//			// Si les cases appartiennent à la même classe
-//			if(case1.getClasse().equals(case2.getClasse())) {
-//				return 0;
-//			}
-//			// Si les cases sont de classes différentes
-//			else {
-//				// on récupère les cases autour de case1
-//				ArrayList<Case> casesAutour = casesAutour(case1);
-//				Joueur j = case1.getJoueur();
-//				case1.setDistance(0);
-//				for(Case c : casesAutour){
-//					if(c.getJoueur() == null) {
-//						c.setDistance(1);
-//						fonctionSansNom(c, case2);
-//					}
-//					else if (c.getJoueur().equals(j)){
-//						c.setDistance(0);
-//						fonctionSansNom(c, case2);
-//					} else {
-//						c.setDistance(-1);
-//					}
-//				}
-//				for(Case[] l : grille_) {
-//					for (Case c : l)
-//						System.out.print(c.getDistance()+" ");
-//					System.out.print("\n");
-//				}
-//				return case2.getDistance();				
-//			}
-//		} 
-//		// Si les joueurs sont différents ou un est null
-//		else {
-//			return -1;
-//		}
-//	}
-//	
-//	public void fonctionSansNom(Case c, Case caseDest){
-//		ArrayList<Case> casesAut = casesAutour(c);
-//		Joueur j = caseDest.getJoueur(); 
-//		for(Case ca : casesAut){
-//			if (!ca.equals(caseDest) && c.getDistance() < ca.getDistance()) {
-//				// Joueur de la case null ou joueur identique à j ou 
-//				// Si la distance de la case observée est supérieure à celle la case c
-//				if(ca.getJoueur() == null ) {
-//					ca.setDistance(c.getDistance()+1);
-//					fonctionSansNom(ca, caseDest);
-//				// Case avec le même joueur
-//				} else if (j.equals(ca.getJoueur())) {
-//					ca.setDistance(c.getDistance());
-//					fonctionSansNom(ca, caseDest);
-//				} else {
-//					ca.setDistance(-1);
-//				}
-//			} else if (c.getDistance() < ca.getDistance()) {
-//				ca.setDistance(c.getDistance());
-//			}
-//		}
-//	}
-	
 	public void initDistCase(Case caseDepart){
 		for(Case[] ligne : grille_)
 			for(Case c : ligne)
 				c.setDistance(Integer.MAX_VALUE);
 		caseDepart.setDistance(0);
 	}
+
+	public int getNbEtoiles() {
+		return nbEtoiles_;
+	}
+
+	public boolean casesEtoilesConnectables() {
+		for (int i=0; i<nbEtoiles_-1; ++i) {
+			initDistCase(casesEtoilesJ1_.get(i));
+			relierCasesMin(casesEtoilesJ1_.get(i), joueur1_);
+			
+			for (int j=i+1; j<nbEtoiles_; ++j) {
+				if(casesEtoilesJ1_.get(j).getDistance() > 0 && casesEtoilesJ1_.get(j).getDistance() != Integer.MAX_VALUE)
+					return true;
+			}
+			
+			initDistCase(casesEtoilesJ2_.get(i));
+			relierCasesMin(casesEtoilesJ2_.get(i), joueur2_);
+			for (int j=i+1; j<nbEtoiles_; ++j) {
+				if(casesEtoilesJ2_.get(j).getDistance() > 0 && casesEtoilesJ2_.get(j).getDistance() != Integer.MAX_VALUE)
+					return true;
+			}
+		}
+		System.out.println("ok");
+		return false;
+	}	
+
 }

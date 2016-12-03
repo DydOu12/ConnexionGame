@@ -5,7 +5,7 @@ public class Application {
 	 */
 	public static void main(String[] args) 
 	{
-		new Fenetre("Best Game Ever", 8, 2);
+		new Fenetre("Best Game Ever", 8, 3);
 		
 		// Test pour la cardinalite
 		/*
