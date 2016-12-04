@@ -39,6 +39,7 @@ public class Partie {
 	
 	public void colorerCase(Case c) {
 		grille_.colorerCase(c, joueurCourant_);
+		fenetreJeu_.getBoutons().get(c.getX()*grille_.getTailleGrille()+c.getY()).setCouleurBouton(joueurCourant_.getCouleur());
 		int[] scores = grille_.afficheScores();
 		if (scores[0] > 1 || scores[1] > 1) {
 			if (scores[0] > scores[1])
@@ -49,7 +50,7 @@ public class Partie {
 		
 		if (partieFinie()) {
 			if(joueurGagnant_ != null){
-				JOptionPane.showMessageDialog(null, "Le joueur "+joueurGagnant_.getPseudo()+" a gagné !", "Partie terminée !", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Le joueur "+joueurGagnant_.getPseudo()+" a gagné !\nScore final : "+grille_.getJoueur1().getPseudo()+" "+scores[0]+"/"+scores[1]+" "+grille_.getJoueur2().getPseudo(), "Partie terminée !", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Aucun des joueurs n'a pu connecter des cases étoiles", "Partie terminée..", JOptionPane.INFORMATION_MESSAGE);
@@ -64,7 +65,6 @@ public class Partie {
 	
 	public void colorerCaseIa() {
 		Case c = grille_.colorerCaseIa(joueurCourant_);
-		fenetreJeu_.getBoutons().get(c.getX()*grille_.getTailleGrille()+c.getY()).setCouleurBouton(joueurCourant_.getCouleur());
 		colorerCase(c);
 	}
 

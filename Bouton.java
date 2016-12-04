@@ -39,11 +39,6 @@ public class Bouton extends JButton implements ActionListener
 	public void colorer(Joueur joueur){	
 		setCouleurBouton(joueur.getCouleur());
 	}
-	
-	public void colorer(Joueur joueur, Joueur joueurSuivant){	
-		colorer(joueur);
-		choixBouton_.setBackground(joueurSuivant.getCouleur());
-	}
 
 	@Override
 	public String toString() {
@@ -53,5 +48,9 @@ public class Bouton extends JButton implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		choixBouton_.actionClic(this);
+	}
+
+	public ChoixBouton getChoixBouton() {
+		return choixBouton_;
 	}
 }
