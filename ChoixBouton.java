@@ -15,7 +15,6 @@ public abstract class ChoixBouton extends JButton implements ActionListener{
 		boutons_ = new ArrayList<>();
 		partie_ = partie;
 		addActionListener(this);
-		setEnabled(false);
 	}
 	
 	public ChoixBouton (String description, ArrayList<Bouton> boutons, Partie partie) {

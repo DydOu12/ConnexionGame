@@ -11,12 +11,12 @@ public class Grille
 	private HashSet<Case> classes_;
 	private int nbEtoiles_;
 	
-	public Grille(int n, int nbEtoiles)
+	public Grille(int n, int nbEtoiles, boolean ia)
 	{
 		grille_ = new Case[n][n];
 		classes_ = new HashSet<>();
-		joueur1_ = new Joueur(Color.BLUE, "BLEU");
-		joueur2_ = new Joueur(Color.RED, "ROUGE");
+		joueur1_ = new Joueur(Color.BLUE, "BLEU", false);
+		joueur2_ = new Joueur(Color.RED, "ROUGE", ia);
 		casesEtoilesJ1_ = new ArrayList<>();
 		casesEtoilesJ2_ = new ArrayList<>();
 		nbEtoiles_ = nbEtoiles;
@@ -310,8 +310,19 @@ public class Grille
 					return true;
 			}
 		}
-		System.out.println("ok");
 		return false;
 	}	
-
+	
+	public Case colorerCaseIa(Joueur ia){
+		int x;
+		int y;
+		Case c;
+		do {
+			x = (int)(Math.random() * getTailleGrille());
+			y = (int)(Math.random() * getTailleGrille());
+			c = grille_[x][y];
+		} while (c.getJoueur() != null);
+		c.setJoueur(ia);
+		return c;
+	}
 }

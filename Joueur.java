@@ -4,11 +4,13 @@ public class Joueur
 {
 	private Color couleur;
 	private String pseudo_;
-
-	public Joueur(Color c, String pseudo)
+	private boolean ia_;
+	
+	public Joueur(Color c, String pseudo, boolean ia)
 	{
 		couleur = c;
 		pseudo_ = pseudo;
+		ia_ = ia;
 	}
 	
 	public Color getCouleur() {
@@ -36,6 +38,10 @@ public class Joueur
 		return pseudo_;
 	}
 	
+	public boolean isIa() {
+		return ia_;
+	}
+
 	@Override
 	public String toString() {
 		return "Joueur [couleur=" + couleur + "]";

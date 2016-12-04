@@ -1,14 +1,18 @@
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 
 public class Partie {
 	private Joueur joueurCourant_;
 	private Grille grille_;
 	private Joueur joueurGagnant_;
+	private FenetreJeu fenetreJeu_;
 	
-	public Partie(int n, int nbEtoiles){
-		grille_ = new Grille(n, nbEtoiles);
+	public Partie(int n, int nbEtoiles, boolean ia, FenetreJeu fenetreJeu){
+		grille_ = new Grille(n, nbEtoiles, ia);
 		joueurCourant_ = grille_.getJoueur1();
+		fenetreJeu_ = fenetreJeu;
 	}
 
 	public Joueur getJoueurCourant() {
@@ -27,6 +31,10 @@ public class Partie {
 		{
 			joueurCourant_ = grille_.getJoueur1(); 
 		}
+		
+		if (joueurCourant_.isIa()) {
+			colorerCaseIa();
+		}
 	}
 	
 	public void colorerCase(Case c) {
@@ -38,8 +46,26 @@ public class Partie {
 			else 
 				joueurGagnant_ = grille_.getJoueur2();
 		}
-		System.out.println(joueurGagnant_);
-		echangerJoueur();
+		
+		if (partieFinie()) {
+			if(joueurGagnant_ != null){
+				JOptionPane.showMessageDialog(null, "Le joueur "+joueurGagnant_.getPseudo()+" a gagné !", "Partie terminée !", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+				JOptionPane.showMessageDialog(null, "Aucun des joueurs n'a pu connecter des cases étoiles", "Partie terminée..", JOptionPane.INFORMATION_MESSAGE);
+			
+			fenetreJeu_.dispose();
+			new FenetreParametre();
+		}
+		else {
+			echangerJoueur();
+		}
+	}
+	
+	public void colorerCaseIa() {
+		Case c = grille_.colorerCaseIa(joueurCourant_);
+		fenetreJeu_.getBoutons().get(c.getX()*grille_.getTailleGrille()+c.getY()).setCouleurBouton(joueurCourant_.getCouleur());
+		colorerCase(c);
 	}
 
 	public ArrayList<Case> afficherComposante(Case ca) {
@@ -80,15 +106,6 @@ public class Partie {
 			return true;
 		return false;
 
-	}
-	public Joueur joueurGagnant() {
-		int[] scores = grille_.afficheScores();
-		if (scores[0] == grille_.getNbEtoiles())
-			return grille_.getJoueur1();
-		else if (scores[1] == grille_.getNbEtoiles())
-			return grille_.getJoueur2();
-		else 
-			return joueurGagnant_;
 	}
 	
 }

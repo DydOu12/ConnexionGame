@@ -15,7 +15,6 @@ public class Bouton extends JButton implements ActionListener
 		case_ = ca;
 		choixBouton_ = choixBouton;
 		addActionListener(this);
-		setEnabled(false);
 		couleurBouton_ = null;
 	}
 
@@ -25,6 +24,7 @@ public class Bouton extends JButton implements ActionListener
 
 	public void setCouleurBouton(Color couleurBouton) {
 		couleurBouton_ = couleurBouton;
+		setBackground(couleurBouton);
 	}
 	
 	public Case getCase() {
@@ -37,8 +37,7 @@ public class Bouton extends JButton implements ActionListener
 	}
 	
 	public void colorer(Joueur joueur){	
-		setBackground(joueur.getCouleur());
-		couleurBouton_ = joueur.getCouleur();
+		setCouleurBouton(joueur.getCouleur());
 	}
 	
 	public void colorer(Joueur joueur, Joueur joueurSuivant){	
