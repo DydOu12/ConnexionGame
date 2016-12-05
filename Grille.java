@@ -314,6 +314,49 @@ public class Grille
 	}	
 	
 	public Case colorerCaseIa(Joueur ia){
+		int x=0;
+		int y=0;
+		Case c;
+		ArrayList<Case> casesEtoiles;
+		if (ia.equals(joueur1_))
+			casesEtoiles = casesEtoilesJ1_;
+		else
+			casesEtoiles = casesEtoilesJ2_;
+		
+		for(Case ca : casesEtoiles) {
+			x += ca.getX();
+			y += ca.getY();
+		}
+		x /= casesEtoiles.size();
+		y /= casesEtoiles.size();
+
+		int i = 0;
+		int xx = x;
+		int yy = y;
+
+		 do {
+			c = grille_[xx][yy];
+			if (xx >= x+i && yy >= y+i) {
+				System.out.println("xx <= x+i && yy <= y+i");
+				++i;
+				xx = x-i;
+				yy = y-i;
+			} else if (yy < y+i) {
+				System.out.println("yy < y+i");
+				++yy;
+			}
+			else {
+				System.out.println("else");
+				yy = y-i;
+				++xx;
+			} 
+
+			System.out.println("xx "+xx);
+			System.out.println("yy "+yy);
+		} while (c.getJoueur() != null);
+		
+		return c;
+		/*
 		int x;
 		int y;
 		Case c;
@@ -322,7 +365,7 @@ public class Grille
 			y = (int)(Math.random() * getTailleGrille());
 			c = grille_[x][y];
 		} while (c.getJoueur() != null);
-		c.setJoueur(ia);
 		return c;
+		 */
 	}
 }

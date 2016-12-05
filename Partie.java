@@ -44,7 +44,7 @@ public class Partie {
 		if (scores[0] > 1 || scores[1] > 1) {
 			if (scores[0] > scores[1])
 				joueurGagnant_ = grille_.getJoueur1();
-			else 
+			else if (scores[0] < scores[1])
 				joueurGagnant_ = grille_.getJoueur2();
 		}
 		
