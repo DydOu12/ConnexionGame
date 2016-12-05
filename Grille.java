@@ -333,39 +333,53 @@ public class Grille
 		int i = 0;
 		int xx = x;
 		int yy = y;
+		
+		int xMax=x;
+		int yMax=y;
+		
+		c = grille_[x][y];
 
-		 do {
-			c = grille_[xx][yy];
-			if (xx >= x+i && yy >= y+i) {
-				System.out.println("xx <= x+i && yy <= y+i");
+		while (c.getJoueur() != null) {
+			
+			if (xx+1 > xMax && yy+1 > yMax) {
+				
 				++i;
-				xx = x-i;
-				yy = y-i;
-			} else if (yy < y+i) {
-				System.out.println("yy < y+i");
+				
+				// On regarde si x+1 n'est pas en dehors de la grille
+				if(x+i<grille_.length)
+					xMax = x+i;
+				else
+					xMax = grille_.length-1;
+				// On regarde si y+1 n'est pas en dehors de la grille
+				if(y+i<grille_.length)
+					yMax = y+i;
+				else
+					yMax = grille_.length-1;
+				
+				// On regarde si x-1 n'est pas en dehors de la grille
+				if (x-i>=0)
+					xx = x-i;
+				else 
+					xx = 0;
+				// On regarde si y+1 n'est pas en dehors de la grille
+				if (y-i>=0)
+					yy = y-i;
+				else 
+					yy = 0;
+				
+			} else if (yy+1 <= yMax) {
 				++yy;
 			}
 			else {
-				System.out.println("else");
-				yy = y-i;
+				if (y-i>=0)
+					yy = y-i;
+				else 
+					yy = 0;
 				++xx;
 			} 
-
-			System.out.println("xx "+xx);
-			System.out.println("yy "+yy);
-		} while (c.getJoueur() != null);
+			c = grille_[xx][yy];
+		}
 		
 		return c;
-		/*
-		int x;
-		int y;
-		Case c;
-		do {
-			x = (int)(Math.random() * getTailleGrille());
-			y = (int)(Math.random() * getTailleGrille());
-			c = grille_[x][y];
-		} while (c.getJoueur() != null);
-		return c;
-		 */
 	}
 }
