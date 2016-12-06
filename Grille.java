@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Grille 
 {
-	public Case[][] grille_;
+	private Case[][] grille_;
 	private Joueur joueur1_, joueur2_;
 	private ArrayList<Case> casesEtoilesJ1_, casesEtoilesJ2_;
 	private HashSet<Case> classes_;
@@ -121,14 +121,13 @@ public class Grille
 		return scores;
 	}
 	
-	public int getNombreEtoiles (Case c) {
+	public int nombreEtoiles (Case c) {
 		return c.getNombreEtoiles();
 	}
 
 	public HashSet<Case> getClasses() {
 		return classes_;
 	}
-	
 	
 	public void placerEtoilesAleatoirement(int nbEtoile){
 		int i = 0;

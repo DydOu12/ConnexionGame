@@ -34,7 +34,7 @@ public class FenetreParametre  extends JFrame implements ActionListener{
 		panneau.add(humains_);
 		panneau.add(ia_);
 		
-		setTitle("ParamÃ¨tres");
+		setTitle("Paramètres");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(panneau);
 		setVisible(true);

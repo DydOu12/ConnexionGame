@@ -81,7 +81,7 @@ public class Partie {
 	}
 	
 	public int getNombreEtoiles(Case c){
-		return grille_.getNombreEtoiles(c.getClasse());
+		return grille_.nombreEtoiles(c.getClasse());
 	}
 	
 	public boolean relieComposantes(Case c) {
