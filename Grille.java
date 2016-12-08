@@ -80,12 +80,6 @@ public class Grille
 			classes_.remove(ca);
 		}
 		
-		// si la classe n'est pas égal à la nouvelle classe créée, on modifie son parent
-		// pour éviter c.setParent(c)  quand c = nouvelleClasse --> boucle infini
-		if (!c.equals(nouvelleClasse)) {
-			c.setParent(nouvelleClasse);
-		}
-		
 		classes_.add(nouvelleClasse);
 	}
 	
