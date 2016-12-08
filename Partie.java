@@ -69,7 +69,7 @@ public class Partie {
 	}
 
 	public ArrayList<Case> afficherComposante(Case ca) {
-		return grille_.afficherComposante(ca.getClasse());
+		return grille_.afficherComposanteClasse(ca);
 	}
 	
 	public boolean existeChemin(Case c1, Case c2){
@@ -93,7 +93,7 @@ public class Partie {
 		Joueur jCase2 = case2.getJoueur();
 		if(jCase1 != null && jCase1.equals(jCase2)) {
 			grille_.initDistCase(case1);
-			grille_.relierCasesMin(case1, case1.getJoueur());
+			grille_.evaluerDistance(case1, case1.getJoueur());
 			return case2.getDistance();
 		} else {
 			return -2;

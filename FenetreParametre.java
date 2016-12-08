@@ -18,12 +18,12 @@ public class FenetreParametre  extends JFrame implements ActionListener{
 		JPanel panneau = new JPanel();
 		panneau.setLayout(new GridLayout(3,2));
 		
-		Integer[] tailles = new Integer[]{6,8,10};
+		Integer[] tailles = new Integer[]{8,10};
 		tailleGrille_ = new JComboBox<>(tailles);
 		panneau.add(new JLabel("Taille de la grille: "));
 		panneau.add(tailleGrille_);
 		panneau.add(new JLabel("Nombre d'Ã©toiles par joueur: "));
-		Integer[] nbEtoiles = new Integer[]{2,3,4};
+		Integer[] nbEtoiles = new Integer[]{2,3,4,10};
 		nombresEtoiles_ = new JComboBox<>(nbEtoiles);
 		panneau.add(nombresEtoiles_);
 		
@@ -34,7 +34,7 @@ public class FenetreParametre  extends JFrame implements ActionListener{
 		panneau.add(humains_);
 		panneau.add(ia_);
 		
-		setTitle("Paramètres");
+		setTitle("Paramï¿½tres");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(panneau);
 		setVisible(true);

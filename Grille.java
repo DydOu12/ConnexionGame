@@ -22,6 +22,7 @@ public class Grille
 		nbEtoiles_ = nbEtoiles;
 		
 		Case c;
+		// on créé les cases pour la grille et on les ajoute aux classes de la grille
 		for(int i=0; i<n; ++i)
 			for(int j=0; j<n; ++j)
 			{
@@ -30,6 +31,7 @@ public class Grille
 				classes_.add(c);
 			}
 		
+		// on place nbEtoiles cases étoiles sur la carte
 		placerEtoilesAleatoirement(nbEtoiles);
 	}
 	
@@ -43,19 +45,26 @@ public class Grille
 		
 		Case nouvelleClasse = c;
 		
+		// classes temporaires
 		Set<Case> classes = new HashSet<>();
+		
 		for (Case caseActuelle : casesAutour) {
-			// si la case observée à un joueur identique à j
+			// si la case observée appartient à un joueur identique à j
 			if(j.equals(caseActuelle.getJoueur())){
+				// on sauvegarde sa classe
 				classeCaseActuelle = caseActuelle.getClasse();
 					
-				// Si la classe que l'on possède déjà est différente à celle que l'on va comparer
+				// Si la classe que l'on possède déjà est différente à celle que l'on va comparer 
 				if (!classeCaseActuelle.equals(nouvelleClasse)) {
 					// Si la cardinalite de la classe de la case que l'on observe est superieure à nouvelleClasse 
 					if (classeCaseActuelle.cardinaliteCase() > nouvelleClasse.cardinaliteCase()) {
+						// on ajoute aux classes temporaires la classe que l'on compare
 						classes.add(nouvelleClasse);
+						// on a attribut à nouvelleClasse la classe de la case observée
 						nouvelleClasse = classeCaseActuelle;
-					} else {
+					}
+					// sinon on ajoute aux classes temporaires la classe de la case observée
+					else {
 						classes.add(classeCaseActuelle);
 					}
 				}
@@ -71,6 +80,8 @@ public class Grille
 			classes_.remove(ca);
 		}
 		
+		// si la classe n'est pas égal à la nouvelle classe créée, on modifie son parent
+		// pour éviter c.setParent(c)  quand c = nouvelleClasse --> boucle infini
 		if (!c.equals(nouvelleClasse)) {
 			c.setParent(nouvelleClasse);
 		}
@@ -93,6 +104,15 @@ public class Grille
 	public Case getCase(int x, int y)
 	{
 		return this.grille_[x][y];
+	}
+	
+	public ArrayList<Case> afficherComposanteClasse(Case ca) {
+		ca = ca.getClasse();
+		ArrayList<Case> composante = new ArrayList<>();
+		composante.add(ca);
+		for (Case fils : ca.getFils())
+				composante.addAll(afficherComposante(fils));
+		return composante;
 	}
 	
 	public ArrayList<Case> afficherComposante(Case ca) {
@@ -261,19 +281,19 @@ public class Grille
 		return false;
 	}
 	
-	public void relierCasesMin(Case case1, Joueur j) {
+	public void evaluerDistance(Case case1, Joueur j) {
 		ArrayList<Case> casesAut = casesAutour(case1);
 		for(Case c : casesAut){
+			// Si la distance de la case observée est supérieure à celle la case case1
 			if (case1.getDistance() < c.getDistance()) {
-				// Joueur de la case null ou joueur identique à j ou 
-				// Si la distance de la case observée est supérieure à celle la case c
+				// Joueur de la case null --> case non coloriée 
 				if(c.getJoueur() == null ) {
 					c.setDistance(case1.getDistance()+1);
-					relierCasesMin(c, j);
+					evaluerDistance(c, j);
 				// Case avec le même joueur
-				} else if (j!=null && j.equals(c.getJoueur())) {
+				} else if (j.equals(c.getJoueur())) {
 					c.setDistance(case1.getDistance());
-					relierCasesMin(c, j);
+					evaluerDistance(c, j);
 				} else {
 					c.setDistance(-1);
 				}
@@ -295,15 +315,14 @@ public class Grille
 	public boolean casesEtoilesConnectables() {
 		for (int i=0; i<nbEtoiles_-1; ++i) {
 			initDistCase(casesEtoilesJ1_.get(i));
-			relierCasesMin(casesEtoilesJ1_.get(i), joueur1_);
-			
+			evaluerDistance(casesEtoilesJ1_.get(i), joueur1_);
 			for (int j=i+1; j<nbEtoiles_; ++j) {
 				if(casesEtoilesJ1_.get(j).getDistance() > 0 && casesEtoilesJ1_.get(j).getDistance() != Integer.MAX_VALUE)
 					return true;
 			}
 			
 			initDistCase(casesEtoilesJ2_.get(i));
-			relierCasesMin(casesEtoilesJ2_.get(i), joueur2_);
+			evaluerDistance(casesEtoilesJ2_.get(i), joueur2_);
 			for (int j=i+1; j<nbEtoiles_; ++j) {
 				if(casesEtoilesJ2_.get(j).getDistance() > 0 && casesEtoilesJ2_.get(j).getDistance() != Integer.MAX_VALUE)
 					return true;
