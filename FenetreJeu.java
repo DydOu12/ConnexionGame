@@ -71,7 +71,6 @@ public class FenetreJeu extends JFrame
 		for(int i=0; i<n; ++i){
 			for(int j=0; j<n; ++j){
 				b = new Bouton(partie.getGrille().getCase(i, j), bColor);
-				b.setText(i+","+j);
 				grille.add(b);
 				boutons.add(b);
 				if(partie.getGrille().getCase(i, j).isaEtoile()) {
